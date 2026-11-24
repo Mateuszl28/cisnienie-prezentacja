@@ -167,6 +167,20 @@ details.why.err[open] summary::after{content:"Zwiń"}
 .gloss div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
 .gloss dt{font-family:var(--f-display);font-weight:700;font-size:17px}
 .gloss dd{margin:4px 0 0;font-size:14px;color:var(--muted)}
+.flow{stroke-dasharray:7 6;animation:flowa .5s linear infinite}
+.flowrev{stroke-dasharray:7 6;animation:flowa .5s linear infinite reverse}
+@keyframes flowa{to{stroke-dashoffset:-13}}
+@media (prefers-reduced-motion: reduce){.flow,.flowrev{animation:none}}
+.kw{overflow-x:auto;padding-bottom:6px}
+.kwrow{display:flex;align-items:center;margin-bottom:4px}
+.kwnum{width:26px;flex:none;font:500 13px var(--f-mono);color:var(--muted)}
+.kwsp{width:32px;height:36px;flex:none}
+.kwcell{width:32px;height:36px;flex:none;text-align:center;font:600 17px var(--f-mono);border:1px solid var(--line);margin-left:-1px;background:var(--surface);color:var(--ink);text-transform:uppercase;padding:0;border-radius:0}
+.kwcell:focus{outline:2px solid var(--accent);position:relative;z-index:1}
+.kwcell.key{background:var(--water-soft);border-color:var(--water)}
+.kwcell.ok{color:var(--good)}
+.kwcell.no{color:var(--bad);background:color-mix(in srgb, var(--bad) 12%, var(--surface))}
+.kwclues{font-size:15px;padding-left:22px;display:grid;gap:4px;margin:14px 0}
 .note{font-size:14px;color:var(--muted);border-left:3px solid var(--accent);padding:2px 0 2px 12px}
 
 .lab{min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:14px}
@@ -581,7 +595,7 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
   <section class="slide single" data-id="quiz" aria-label="Sprawdź się" hidden>
     <div class="text" style="max-width:none">
       <p class="eyebrow">Sprawdź się</p>
-      <h2>Szesnaście pytań</h2>
+      <h2>Osiemnaście pytań</h2>
       <p class="score" id="qScore">Wynik: 0 / 10</p>
       <div class="quiz" id="quiz"></div>
     </div>
@@ -1271,6 +1285,209 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
     </div>
   </section>
 
+  <!-- Hamulce hydrauliczne -->
+  <section class="slide" data-id="hamulce" aria-label="Hamulce hydrauliczne" hidden>
+    <div class="text">
+      <p class="eyebrow">Część I · ciśnienie hydrostatyczne</p>
+      <h2>Hamulce hydrauliczne</h2>
+      <p>Hamulce w samochodzie to prawo Pascala w praktyce. Pedał działa jak dźwignia i zwiększa siłę nogi ok. 4 razy. Naciska na mały tłok w <b>pompie hamulcowej</b>, a ten na płyn hamulcowy.</p>
+      <p>Ciśnienie rozchodzi się przewodami jednakowo do wszystkich kół. Przy każdym kole jest tłok o większym polu, który z dużą siłą dociska klocki do tarczy hamulcowej.</p>
+      <div class="formula">p = F<sub>1</sub> / S<sub>1</sub> → F<sub>koła</sub> = p · S<sub>2</sub></div>
+      <p class="note">Płynu hamulcowego prawie nie da się ścisnąć. Gdy do przewodów dostanie się powietrze, które łatwo ścisnąć, pedał robi się „miękki” i hamulce działają słabo. Dlatego mechanik odpowietrza hamulce.</p>
+    </div>
+    <div class="lab">
+      <svg viewBox="0 0 420 310" role="img" aria-label="Pedał, pompa hamulcowa i dwa koła z hamulcami"><g id="hbG"></g></svg>
+      <div class="controls">
+        <div class="ctl"><label for="hbF">Siła nacisku nogi na pedał</label><output id="hbFo"></output><input type="range" id="hbF" min="0" max="500" step="10" value="200"></div>
+      </div>
+      <label class="check"><input type="checkbox" id="hbAir"> Powietrze w przewodach hamulcowych</label>
+      <div class="readout">
+        <div><div class="k">Ciśnienie płynu</div><div class="v" id="hbP"></div></div>
+        <div class="hl"><div class="k">Docisk klocków (każde koło)</div><div class="v" id="hbF2"></div></div>
+      </div>
+      <p class="calc" id="hbCalc"></p>
+    </div>
+  </section>
+
+  <!-- Wieża ciśnień -->
+  <section class="slide" data-id="wieza" aria-label="Wieża ciśnień i wodociągi" hidden>
+    <div class="text">
+      <p class="eyebrow">Część I · ciśnienie hydrostatyczne</p>
+      <h2>Wieża ciśnień i wodociągi</h2>
+      <p><b>Wieża ciśnień</b> to zbiornik z wodą ustawiony wysoko. Razem z rurami w mieście tworzy naczynia połączone.</p>
+      <p>Ciśnienie wody w kranie zależy od różnicy wysokości między poziomem wody w zbiorniku a kranem:</p>
+      <div class="formula"><b>p</b> = ρ · g · Δh</div>
+      <p>Woda nie popłynie z kranu położonego wyżej niż poziom wody w zbiorniku. Każde 10 m różnicy wysokości daje ok. 1 bar ciśnienia.</p>
+      <p class="note">W wysokich wieżowcach wieża ciśnień by nie wystarczyła. Tam pompy tłoczą wodę na wyższe piętra.</p>
+    </div>
+    <div class="lab">
+      <span class="live">Woda płynie na żywo</span>
+      <svg viewBox="0 0 420 335" role="img" aria-label="Wieża ciśnień i blok z kranami na każdym piętrze"><g id="wzG"></g></svg>
+      <div class="controls">
+        <div class="ctl"><label for="wzL">Poziom wody w zbiorniku wieży</label><output id="wzLo"></output><input type="range" id="wzL" min="8" max="42" step="0.5" value="24"></div>
+      </div>
+      <div class="readout">
+        <div class="hl"><div class="k">Ciśnienie na parterze</div><div class="v" id="wzP0"></div></div>
+        <div><div class="k">Woda dociera do</div><div class="v" id="wzTop" style="font-family:var(--f-body);font-size:17px"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Nadciśnienie i podciśnienie -->
+  <section class="slide" data-id="nadcisnienie" aria-label="Nadciśnienie i podciśnienie" hidden>
+    <div class="text">
+      <p class="eyebrow">Część II · ciśnienie atmosferyczne</p>
+      <h2>Nadciśnienie i podciśnienie</h2>
+      <ul class="legend" id="ncList">
+        <li><b>Ciśnienie bezwzględne</b>: liczone od zera, czyli od próżni.</li>
+        <li><b>Nadciśnienie</b>: o ile ciśnienie jest <i>wyższe</i> od atmosferycznego. Tak jest w oponach, piłkach i butlach.</li>
+        <li><b>Podciśnienie</b>: o ile ciśnienie jest <i>niższe</i> od atmosferycznego. Tak jest w odkurzaczu, w słomce podczas picia i w słoiku zakręconym na gorąco.</li>
+        <li><b>Próżnia</b>: brak gazu, ciśnienie bezwzględne równe zero.</li>
+      </ul>
+      <p>Większość manometrów pokazuje nadciśnienie. Napis „2,2 bar” przy oponie samochodu oznacza, że w środku jest o 2,2 bara więcej niż na zewnątrz, czyli ok. 3,2 bara bezwzględnie.</p>
+      <p class="note">Słoik zakręcony na gorąco „pyka” przy otwieraniu. Powietrze w środku ostygło, ma podciśnienie, a atmosfera dociskała wieczko.</p>
+    </div>
+    <div class="lab">
+      <svg viewBox="0 0 360 320" role="img" aria-label="Skala ciśnienia bezwzględnego z zaznaczonym ciśnieniem atmosferycznym"><g id="ncG"></g></svg>
+      <div class="chips" id="ncPre">
+        <button class="chip" data-p="0">Próżnia</button>
+        <button class="chip" data-p="0.8">Rura odkurzacza</button>
+        <button class="chip" data-p="1.013" aria-pressed="true">Powietrze wokół nas</button>
+        <button class="chip" data-p="1.9">Piłka nożna</button>
+        <button class="chip" data-p="3.2">Opona samochodu</button>
+        <button class="chip" data-p="7">Opona roweru szosowego</button>
+      </div>
+      <div class="controls">
+        <div class="ctl"><label for="ncP">Ciśnienie bezwzględne</label><output id="ncPo"></output><input type="range" id="ncP" min="0" max="8" step="0.01" value="1.013"></div>
+      </div>
+      <div class="readout">
+        <div><div class="k">Bezwzględne</div><div class="v" id="ncA"></div></div>
+        <div class="hl"><div class="k">Względem atmosfery</div><div class="v" id="ncR" style="font-size:17px"></div></div>
+        <div><div class="k">Manometr pokaże</div><div class="v" id="ncM"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Planety -->
+  <section class="slide" data-id="planety" aria-label="Ciśnienie na innych planetach" hidden>
+    <div class="text">
+      <p class="eyebrow">Część II · ciśnienie atmosferyczne</p>
+      <h2>Ciśnienie na innych planetach</h2>
+      <p>Każde ciało niebieskie z atmosferą ma przy powierzchni inne ciśnienie. Zależy ono od tego, ile gazu jest w atmosferze i jak mocno planeta go przyciąga.</p>
+      <ul class="legend">
+        <li><b>Wenus</b>: ok. 92 000 hPa, jak 900 m pod wodą na Ziemi.</li>
+        <li><b>Ziemia</b>: 1013 hPa.</li>
+        <li><b>Tytan</b> (księżyc Saturna): ok. 1470 hPa.</li>
+        <li><b>Mars</b>: ok. 6 hPa, ponad 150 razy mniej niż na Ziemi.</li>
+        <li><b>Merkury i Księżyc</b>: prawie próżnia.</li>
+      </ul>
+      <p class="note">Eksperyment myślowy: zabieramy balonik z 1 litrem powietrza z Ziemi na inne planety. Wybierz planetę i zobacz, co się z nim stanie.</p>
+    </div>
+    <div class="lab">
+      <svg viewBox="0 0 360 320" role="img" aria-label="Balonik na powierzchni wybranej planety"><g id="plnG"></g></svg>
+      <div class="chips" id="plnPre"></div>
+      <div class="readout">
+        <div class="hl"><div class="k">Ciśnienie</div><div class="v" id="plnP" style="font-size:17px"></div></div>
+        <div><div class="k">W porównaniu z Ziemią</div><div class="v" id="plnX" style="font-size:17px"></div></div>
+        <div><div class="k">Balonik (1 l na Ziemi)</div><div class="v" id="plnB" style="font-size:17px"></div></div>
+      </div>
+      <p class="def" id="plnInfo" style="margin:0" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <!-- Pompa ssąca -->
+  <section class="slide" data-id="pompa" aria-label="Pompa ssąca i granica 10 metrów" hidden>
+    <div class="text">
+      <p class="eyebrow">Część II · ciśnienie atmosferyczne</p>
+      <h2>Dlaczego pompa nie wyssie wody z 15 metrów?</h2>
+      <p>Pompa ssąca usuwa powietrze z rury nad wodą. Wody nie „ciągnie” sama pompa, tylko wpycha ją do rury ciśnienie atmosferyczne, które naciska na wodę w studni.</p>
+      <p>Nawet gdyby pompa zrobiła idealną próżnię, ciśnienie atmosferyczne podniesie słup wody najwyżej na ok. <b>10,3 m</b>. To ta sama granica co w doświadczeniu Torricellego:</p>
+      <div class="formula">h<sub>max</sub> = p<sub>atm</sub> / (ρ · g) = 101 300 / (1000 · 10) ≈ 10 m</div>
+      <p class="note">Dlatego w głębokich studniach pompę umieszcza się na dole, pod wodą. Taka pompa głębinowa wypycha wodę do góry zamiast ją zasysać.</p>
+    </div>
+    <div class="lab">
+      <span class="live">Symulacja na żywo · studnia</span>
+      <svg viewBox="0 0 360 350" role="img" aria-label="Studnia z pompą ssącą"><g id="pmG"></g></svg>
+      <div class="controls">
+        <div class="ctl"><label for="pmD">Głębokość lustra wody w studni</label><output id="pmDo"></output><input type="range" id="pmD" min="2" max="15" step="0.5" value="6"></div>
+      </div>
+      <button class="navbtn primary holdbtn" id="pmBtn" style="justify-self:start">Pompuj (przytrzymaj)</button>
+      <div class="readout">
+        <div><div class="k">Ciśnienie w rurze</div><div class="v" id="pmP"></div></div>
+        <div><div class="k">Słup wody w rurze</div><div class="v" id="pmH"></div></div>
+        <div class="hl"><div class="k">Stan</div><div class="v" id="pmS" style="font-family:var(--f-body);font-size:16px"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Balon -->
+  <section class="slide" data-id="balon" aria-label="Balon na ogrzane powietrze" hidden>
+    <div class="text">
+      <p class="eyebrow">Część II · ciśnienie atmosferyczne</p>
+      <h2>Balon na ogrzane powietrze</h2>
+      <p>Prawo Archimedesa działa także w gazach. Na balon działa siła wyporu równa ciężarowi powietrza, które balon wypiera:</p>
+      <div class="formula"><b>F<sub>w</sub></b> = ρ<sub>powietrza</sub> · g · V<sub>balonu</sub></div>
+      <p>Ciepłe powietrze jest rzadsze, czyli ma mniejszą gęstość niż zimne. Palnik ogrzewa powietrze w czaszy. Gdy balon razem z gorącym powietrzem waży mniej niż wypierane zimne powietrze, balon się unosi.</p>
+      <p>Wyżej powietrze jest rzadsze i wypór maleje. Dlatego balon zatrzymuje się na wysokości, na której siły się równoważą.</p>
+      <p class="note">Hel i wodór są lżejsze od powietrza nawet bez podgrzewania. Dlatego balonik z helem sam leci do góry.</p>
+    </div>
+    <div class="lab">
+      <span class="live">Symulacja na żywo · czasza 2800 m³</span>
+      <svg viewBox="0 0 400 380" role="img" aria-label="Balon na ogrzane powietrze nad ziemią"><g id="blG"></g></svg>
+      <button class="navbtn primary holdbtn" id="blBtn" style="justify-self:start">Włącz palnik (przytrzymaj)</button>
+      <div class="readout">
+        <div><div class="k">Temperatura w czaszy</div><div class="v" id="blT"></div></div>
+        <div><div class="k">Siła wyporu</div><div class="v" id="blFw"></div></div>
+        <div><div class="k">Ciężar balonu z powietrzem</div><div class="v" id="blQ"></div></div>
+        <div class="hl"><div class="k">Wysokość</div><div class="v" id="blH"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lewar -->
+  <section class="slide" data-id="lewar" aria-label="Lewar: przelewanie wężykiem" hidden>
+    <div class="text">
+      <p class="eyebrow">Część III · oba ciśnienia razem</p>
+      <h2>Lewar: jak przelać wodę wężykiem?</h2>
+      <p><b>Lewar</b> to wężyk wypełniony cieczą, który łączy dwa naczynia: wyżej i niżej położone. Woda płynie nim z wyższego naczynia do niższego, choć po drodze musi przejść w górę, ponad krawędź naczynia!</p>
+      <p>Ciśnienie atmosferyczne wpycha wodę do wężyka z obu stron. Słup wody w dłuższym ramieniu, po stronie niższego naczynia, jest cięższy, więc woda płynie w jego stronę.</p>
+      <p>Woda płynie, dopóki poziomy wody w obu naczyniach się nie wyrównają albo dopóki do wężyka nie dostanie się powietrze.</p>
+      <p class="note">Lewarem spuszcza się wodę z akwarium i basenu albo przelewa paliwo z kanistra.</p>
+    </div>
+    <div class="lab">
+      <span class="live">Symulacja na żywo</span>
+      <svg viewBox="0 0 400 345" role="img" aria-label="Dwa naczynia połączone wężykiem"><g id="lwG"></g></svg>
+      <div class="controls">
+        <div class="ctl"><label for="lwS">Wysokość podstawki pod naczyniem A</label><output id="lwSo"></output><input type="range" id="lwS" min="0" max="40" step="1" value="30"></div>
+      </div>
+      <div class="btnrow">
+        <button class="navbtn primary" id="lwStart">Zassij wodę do wężyka</button>
+        <button class="navbtn" id="lwReset">Od nowa</button>
+      </div>
+      <div class="readout">
+        <div><div class="k">Różnica poziomów</div><div class="v" id="lwD" style="font-size:17px"></div></div>
+        <div class="hl"><div class="k">Przepływ</div><div class="v" id="lwQ" style="font-family:var(--f-body);font-size:16px"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Krzyżówka -->
+  <section class="slide single" data-id="krzyzowka" aria-label="Krzyżówka z hasłem" hidden>
+    <div class="text" style="max-width:none">
+      <p class="eyebrow">Część IV · ćwiczenia</p>
+      <h2>Krzyżówka z hasłem</h2>
+      <p>Wpisz odpowiedzi. Litery w niebieskiej kolumnie utworzą hasło: nazwę jednostki ciśnienia.</p>
+      <div class="kw" id="kwGrid"></div>
+      <ol class="kwclues" id="kwClues"></ol>
+      <div class="btnrow">
+        <button class="navbtn primary" id="kwCheck">Sprawdź</button>
+        <button class="navbtn" id="kwShow">Pokaż rozwiązanie</button>
+        <button class="navbtn" id="kwClear">Wyczyść</button>
+      </div>
+      <p class="expl" id="kwMsg" aria-live="polite"></p>
+    </div>
+  </section>
+
   <!-- Laboratorium: manometr -->
   <section class="slide" data-id="manometr" aria-label="Laboratorium: pomiar manometrem" hidden>
     <div class="text">
@@ -1384,10 +1601,10 @@ function chipGroup(container, onPick){
 
 /* ---------- Nawigacja ---------- */
 const ORDER = ['start','cisnienie','jednostki',
-  'hydro-wstep','wyprowadzenie','hydrostatyka','manometr','paradoks','parcie','pascal','naczynia','wypor','plywanie','hydro-zycie',
-  'atm-wstep','gazy','atmosfera','torricelli','barometr','wiatr','przyrzady','wysokosc','szybkowar','atm-zycie','magdeburg',
-  'nurek','kartezjusz','organizm','przyroda','historia','porownanie','segreguj',
-  'domowe','bledy','zadania','quiz','podsumowanie','slowniczek'];
+  'hydro-wstep','wyprowadzenie','hydrostatyka','manometr','paradoks','parcie','pascal','hamulce','naczynia','wieza','wypor','plywanie','hydro-zycie',
+  'atm-wstep','gazy','nadcisnienie','atmosfera','planety','torricelli','barometr','wiatr','przyrzady','wysokosc','szybkowar','atm-zycie','pompa','magdeburg','balon',
+  'nurek','kartezjusz','lewar','organizm','przyroda','historia','porownanie','segreguj',
+  'domowe','bledy','zadania','quiz','krzyzowka','podsumowanie','slowniczek'];
 ORDER.forEach(id => { const s = document.querySelector(`.slide[data-id="${id}"]`); if (s) $('main').appendChild(s); });
 const slides = [...document.querySelectorAll('.slide')];
 const ids = slides.map(s => s.dataset.id);
@@ -2021,6 +2238,10 @@ fromHash();
      o:['tonie','pływa częściowo zanurzony','unosi się w połowie głębokości'], a:1, e:'Lód ma mniejszą gęstość niż woda, więc pływa. Zanurza się w ok. 92%.'},
     {q:'Dlaczego w szybkowarze obiad gotuje się szybciej?',
      o:['Bo ciśnienie jest wyższe i woda wrze w ok. 120 °C','Bo pokrywka sama grzeje','Bo para jest zimniejsza'], a:0, e:'Wyższe ciśnienie podnosi temperaturę wrzenia wody.'},
+    {q:'Z jakiej największej głębokości pompa ssąca może podnieść wodę?',
+     o:['Ok. 1 m','Ok. 10 m','Z dowolnej'], a:1, e:'Wodę wpycha do rury ciśnienie atmosferyczne, a ono zrównoważy słup wody najwyżej ok. 10,3 m.'},
+    {q:'Manometr przy oponie pokazuje 2 bary. Co to znaczy?',
+     o:['W oponie jest o 2 bary więcej niż na zewnątrz','W oponie są dokładnie 2 bary bezwzględnie','W oponie jest podciśnienie'], a:0, e:'Manometr pokazuje nadciśnienie. Bezwzględnie w oponie jest ok. 3 bary.'},
     {q:'Dlaczego w wysokich górach woda wrze w temperaturze niższej niż 100 °C?',
      o:['Bo jest tam zimniej','Bo ciśnienie atmosferyczne jest niższe','Bo woda jest tam czystsza'], a:1, e:'Temperatura wrzenia rośnie z ciśnieniem. Na Rysach (ok. 750 hPa) woda wrze w ok. 91 °C.'},
     {q:'Dlaczego Torricelli użył rtęci, a nie wody?',
@@ -2392,6 +2613,10 @@ fromHash();
     ['Siła wyporu', 'Siła, z jaką ciecz lub gaz wypycha zanurzone ciało do góry: F = ρ · g · V.'],
     ['Prawo Archimedesa', 'Na ciało zanurzone w cieczy działa siła wyporu równa ciężarowi cieczy wypartej przez to ciało.'],
     ['Izobara', 'Linia na mapie pogody łącząca miejsca o tym samym ciśnieniu atmosferycznym.'],
+    ['Nadciśnienie', 'O ile ciśnienie jest wyższe od atmosferycznego. Pokazuje je większość manometrów, np. przy oponach.'],
+    ['Podciśnienie', 'O ile ciśnienie jest niższe od atmosferycznego, np. w odkurzaczu albo w słomce podczas picia.'],
+    ['Lewar', 'Wężyk wypełniony cieczą, którym przelewa się ciecz z naczynia położonego wyżej do położonego niżej.'],
+    ['Wieża ciśnień', 'Wysoko ustawiony zbiornik z wodą, który dzięki ciśnieniu hydrostatycznemu zasila wodociągi.'],
     ['Temperatura wrzenia', 'Temperatura, w której ciecz wrze. Dla wody na poziomie morza to 100 °C. Rośnie, gdy rośnie ciśnienie.']];
   const norm = s => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/ł/g, 'l');
   const dl = $('gloss');
@@ -2602,6 +2827,286 @@ fromHash();
   };
 })();
 
+/* ---------- hamulce ---------- */
+(function(){
+  const sF = $('hbF'), cA = $('hbAir'), G = $('hbG');
+  function draw(){
+    const F = +sF.value, air = cA.checked, p = F*4/5e-4*(air ? 0.35 : 1), F2 = p*25e-4, op = .3 + .65*Math.min(1, p/4e6);
+    S.hb = {F2};
+    $('hbFo').textContent = F + ' N';
+    G.innerHTML = '';
+    const ang = F/500*25, push = F/500*(air ? 34 : 18);
+    const g1 = el('g', {transform:`rotate(${-ang} 50 60)`}, G);
+    el('line', {x1:50, y1:60, x2:50, y2:190, stroke:'var(--ink)', 'stroke-width':6, 'stroke-linecap':'round'}, g1);
+    el('rect', {x:28, y:186, width:44, height:12, rx:3, fill:'var(--ink)'}, g1);
+    el('circle', {cx:50, cy:60, r:6, fill:'var(--muted)'}, G);
+    el('text', {x:50, y:228, 'text-anchor':'middle', class:'svgt'}, G).textContent = 'pedał';
+    if (F > 0) arrow(G, 10, 210 - ang, 30, 196 - ang*0.6);
+    el('rect', {x:96, y:140, width:84, height:30, rx:4, fill:'none', stroke:'var(--glass)', 'stroke-width':2}, G);
+    el('rect', {x:98 + push, y:142, width:80 - push, height:26, fill:'var(--oil)', opacity:op}, G);
+    el('rect', {x:92 + push, y:142, width:6, height:26, fill:'var(--ink)'}, G);
+    el('line', {x1:56, y1:155, x2:92 + push, y2:155, stroke:'var(--ink)', 'stroke-width':3}, G);
+    el('text', {x:138, y:190, 'text-anchor':'middle', class:'svgt'}, G).textContent = 'pompa hamulcowa';
+    if (air) for (let k = 0; k < 4; k++) el('circle', {cx:205 + k*4, cy:100 + k*45, r:4, fill:'var(--surface)', stroke:'var(--muted)'}, G);
+    [[340, 70], [340, 240]].forEach(([wx, wy]) => {
+      el('path', {d:`M180 155 H215 V${wy} H262`, fill:'none', stroke:'var(--oil)', 'stroke-width':5, opacity:op}, G);
+      el('circle', {cx:wx, cy:wy, r:56, fill:'none', stroke:'var(--ink)', 'stroke-width':12, opacity:.8}, G);
+      el('circle', {cx:wx, cy:wy, r:36, fill:'var(--mercury)', opacity:.55}, G);
+      el('rect', {x:262, y:wy - 15, width:16, height:30, fill:'var(--oil)', opacity:op, stroke:'var(--glass)'}, G);
+      const gap = Math.max(0, 5 - F2/1200);
+      el('rect', {x:278 + (5 - gap), y:wy - 13, width:6, height:26, fill:'var(--accent)'}, G);
+      if (F2 > 200) arrow(G, 268, wy - 26, 268 + 6 + Math.min(30, F2/400), wy - 26);
+    });
+    el('text', {x:340, y:150, 'text-anchor':'middle', class:'svgt'}, G).textContent = 'tarcza i klocki';
+    $('hbP').textContent = fmtP(p);
+    $('hbF2').textContent = nv(F2, 0) + ' N';
+    $('hbCalc').innerHTML = `<span class="lbl">Obliczenie (S₁ = 5 cm², S₂ = 25 cm²)</span>Siła na tłoku: ${F} N · 4 = ${nv(F*4,0)} N<br>p = ${nv(F*4,0)} N : 0,0005 m² = ${nv(F*4/5e-4,0)} Pa${air ? ' → przez powietrze tylko ok. ' + nv(p,0) + ' Pa' : ''}<br>Docisk: p · S₂ = ${nv(p,0)} Pa · 0,0025 m² = <b>${nv(F2,0)} N</b>`;
+  }
+  sF.oninput = draw; cA.onchange = draw; draw();
+})();
+
+/* ---------- wieża ciśnień ---------- */
+(function(){
+  const sL = $('wzL'), G = $('wzG'), Y = m => 318 - m*6.6;
+  function draw(){
+    const L = +sL.value; let top = -1;
+    G.innerHTML = '';
+    el('rect', {x:0, y:318, width:420, height:17, class:'ground'}, G);
+    [[38, 92], [48, 82]].forEach(([a, b]) => { el('line', {x1:a, y1:318, x2:a + 4, y2:Y(L - 5), stroke:'var(--muted)', 'stroke-width':2}, G); el('line', {x1:b, y1:318, x2:b - 4, y2:Y(L - 5), stroke:'var(--muted)', 'stroke-width':2}, G); });
+    el('rect', {x:30, y:Y(L), width:70, height:Y(L - 5) - Y(L), fill:'var(--water)', opacity:.6}, G);
+    el('path', {d:`M30 ${Y(L + 1.5)} V${Y(L - 5)} H100 V${Y(L + 1.5)}`, class:'glass'}, G);
+    el('path', {d:`M65 ${Y(L - 5)} V314 H214 V${Y(28.5)}`, fill:'none', stroke:'var(--glass)', 'stroke-width':6}, G);
+    el('path', {d:`M65 ${Y(L - 5)} V314 H214 V${Y(Math.min(28.5, L))}`, fill:'none', stroke:'var(--water)', 'stroke-width':3, class:'flow'}, G);
+    el('line', {x1:20, x2:400, y1:Y(L), y2:Y(L), class:'dash'}, G);
+    el('text', {x:400, y:Y(L) - 5, 'text-anchor':'end', class:'svgt'}, G).textContent = 'poziom wody w wieży: ' + nv(L, 1) + ' m';
+    el('rect', {x:206, y:Y(30), width:124, height:318 - Y(30), fill:'none', stroke:'var(--ink)', 'stroke-width':2}, G);
+    for (let k = 0; k < 10; k++) {
+      const hf = 3*k, ht = hf + 1.2, y = Y(ht);
+      el('line', {x1:206, x2:330, y1:Y(hf), y2:Y(hf), stroke:'var(--line)'}, G);
+      el('text', {x:224, y:Y(hf) - 5, class:'svgt'}, G).textContent = k === 0 ? 'parter' : k + '.';
+      el('line', {x1:330, x2:342, y1:y, y2:y, stroke:'var(--ink)', 'stroke-width':3}, G);
+      const dh = L - ht;
+      if (dh > 0) {
+        top = k;
+        const len = 6 + 7*Math.sqrt(dh);
+        el('path', {d:`M342 ${y} q${len} 0 ${len*1.1} 14`, fill:'none', stroke:'var(--water)', 'stroke-width':2.5, class:'flow'}, G);
+        el('text', {x:416, y:y + 4, 'text-anchor':'end', class:'svgt'}, G).textContent = nv(1000*g*dh/1e5, 1) + ' bar';
+      } else el('text', {x:416, y:y + 4, 'text-anchor':'end', class:'svgt', style:'fill:var(--bad)'}, G).textContent = 'sucho';
+    }
+    $('wzLo').textContent = nv(L, 1) + ' m';
+    $('wzP0').textContent = L > 1.2 ? nv(1000*g*(L - 1.2)/1e5, 2) + ' bar' : '0';
+    $('wzTop').textContent = top < 0 ? 'nigdzie' : top === 9 ? 'wszystkich pięter' : top === 0 ? 'tylko parteru' : top + '. piętra';
+    S.wz = {top};
+  }
+  sL.oninput = draw; draw();
+})();
+
+/* ---------- nadciśnienie ---------- */
+(function(){
+  const sP = $('ncP'), G = $('ncG'), Y = b => 300 - b*35, AT = 1.013;
+  chipGroup($('ncPre'), b => { sP.value = b.dataset.p; draw(); });
+  sP.addEventListener('input', () => $('ncPre').querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', 'false')));
+  function draw(){
+    const p = +sP.value, d = p - AT;
+    G.innerHTML = '';
+    for (let b = 0; b <= 8; b++) { el('line', {x1:120, x2:132, y1:Y(b), y2:Y(b), class:'tick'}, G); el('text', {x:114, y:Y(b) + 4, 'text-anchor':'end', class:'svgt'}, G).textContent = b + ' bar'; }
+    el('rect', {x:140, y:Y(8), width:50, height:Y(0) - Y(8), fill:'var(--bg)', stroke:'var(--glass)', 'stroke-width':2}, G);
+    if (d > 0) el('rect', {x:142, y:Y(p), width:46, height:Y(AT) - Y(p), fill:'var(--accent)', opacity:.75}, G);
+    if (d < 0) el('rect', {x:142, y:Y(AT), width:46, height:Y(p) - Y(AT), fill:'var(--water)', opacity:.6}, G);
+    el('line', {x1:132, x2:300, y1:Y(AT), y2:Y(AT), class:'dash'}, G);
+    el('text', {x:200, y:Y(AT) - 6, class:'svgt'}, G).textContent = 'ciśnienie atmosferyczne';
+    el('text', {x:200, y:Y(0) - 6, class:'svgt'}, G).textContent = 'próżnia (0)';
+    el('line', {x1:132, x2:200, y1:Y(p), y2:Y(p), stroke:'var(--ink)', 'stroke-width':3}, G);
+    el('text', {x:206, y:Y(p) + 4, class:'svgt-b'}, G).textContent = d > 0.005 ? 'nadciśnienie' : d < -0.005 ? 'podciśnienie' : '';
+    $('ncPo').textContent = nv(p, 2) + ' bar';
+    $('ncA').textContent = nv(p, 2) + ' bar';
+    $('ncR').textContent = d > 0.005 ? 'nadciśnienie +' + nv(d, 2) + ' bar' : d < -0.005 ? 'podciśnienie −' + nv(-d, 2) + ' bar' : 'równe atmosferycznemu';
+    $('ncM').textContent = nv(d, 2) + ' bar';
+    S.nc = {p};
+  }
+  sP.oninput = draw; draw();
+})();
+
+/* ---------- planety ---------- */
+(function(){
+  const PL = [
+    {n:'Merkury', p:0, ps:'prawie próżnia', c:'--glass', t:'Merkury ma tak cienką atmosferę, że to prawie próżnia. Balonik by pękł, bo powietrza w środku nic by nie ściskało.'},
+    {n:'Wenus', p:92000, ps:'ok. 92 000 hPa', c:'--oil', t:'Gęsta atmosfera z dwutlenku węgla. Ciśnienie jest ok. 90 razy większe niż na Ziemi, jak 900 m pod wodą. Sondy, które tam wylądowały, przetrwały najwyżej ok. 2 godziny.'},
+    {n:'Ziemia', p:1013, ps:'1013 hPa', c:'--water', t:'Nasza atmosfera z azotu i tlenu. Ciśnienie, do którego przystosowały się nasze ciała.'},
+    {n:'Księżyc', p:0, ps:'prawie próżnia', c:'--line', t:'Księżyc nie ma atmosfery. Astronauci noszą skafandry, które utrzymują wokół ciała odpowiednie ciśnienie.'},
+    {n:'Mars', p:6, ps:'ok. 6 hPa', c:'--accent', t:'Atmosfera jest ponad 150 razy rzadsza niż ziemska. Woda w stanie ciekłym nie przetrwa tam długo: szybko paruje albo zamarza.'},
+    {n:'Tytan', p:1470, ps:'ok. 1470 hPa', c:'--oil', t:'Księżyc Saturna ma gęstszą atmosferę niż Ziemia, głównie z azotu. Ciśnienie byłoby dla człowieka znośne, ale temperatura to ok. −180 °C.'}];
+  const box = $('plnPre');
+  PL.forEach((P, i) => { const b = document.createElement('button'); b.className = 'chip'; b.textContent = P.n; b.dataset.i = i; b.setAttribute('aria-pressed', i === 2 ? 'true' : 'false'); box.appendChild(b); });
+  function show(i){
+    const P = PL[i], G = $('plnG'); G.innerHTML = '';
+    el('ellipse', {cx:180, cy:430, rx:300, ry:150, fill:`var(${P.c})`, opacity:.7}, G);
+    el('text', {x:180, y:308, 'text-anchor':'middle', class:'svgt-b'}, G).textContent = P.n;
+    if (P.p === 0) {
+      el('text', {x:180, y:150, 'text-anchor':'middle', class:'svgt-b', style:'font-size:22px;fill:var(--bad)'}, G).textContent = 'PĘKŁ!';
+      for (let k = 0; k < 8; k++) { const a = k/8*6.283; el('line', {x1:180 + Math.cos(a)*30, y1:140 + Math.sin(a)*30, x2:180 + Math.cos(a)*52, y2:140 + Math.sin(a)*52, stroke:'var(--bad)', 'stroke-width':3, 'stroke-linecap':'round'}, G); }
+      $('plnB').textContent = 'pęka'; $('plnX').textContent = 'prawie 0';
+    } else {
+      const V = 1013/P.p, r = Math.min(135, 30*Math.cbrt(V));
+      el('line', {x1:180, y1:140 + r, x2:180, y2:285, stroke:'var(--muted)', 'stroke-width':1.5}, G);
+      el('circle', {cx:180, cy:140, r, fill:'var(--bad)', opacity:.75}, G);
+      $('plnB').textContent = (V >= 10 ? nv(V, 0) : V >= 0.1 ? nv(V, 2) : nv(V, 3)) + ' l' + (r >= 135 ? ' (ogromny!)' : '');
+      const x = P.p/1013;
+      $('plnX').textContent = x > 1.05 ? nv(x, x > 10 ? 0 : 1) + ' razy więcej' : x < 0.95 ? nv(1/x, 0) + ' razy mniej' : 'tyle samo';
+    }
+    $('plnP').textContent = P.ps;
+    $('plnInfo').innerHTML = `<b>${P.n}</b>: ${P.t}`;
+    S.pln = P.n;
+  }
+  chipGroup(box, b => show(+b.dataset.i));
+  S.plnShow = i => { [...box.children].forEach((c, k) => c.setAttribute('aria-pressed', k === i ? 'true' : 'false')); show(i); };
+  show(2);
+})();
+
+/* ---------- pompa ssąca ---------- */
+(function(){
+  let pin = 1013, col = 0, out = 0, pump = false;
+  holdButton($('pmBtn'), v => { pump = v; });
+  S.pmPress = v => { pump = v; $('pmBtn').classList.toggle('held', v); };
+  const SC = 18, GY = 60, sD = $('pmD');
+  sD.addEventListener('input', () => { out = 0; });
+  sims.pompa = (dt, frozen) => {
+    const D = +sD.value;
+    if (pump) pin = frozen ? 50 : Math.max(50, pin - (pin - 40)*dt*1.2); else pin = frozen ? 1013 : Math.min(1013, pin + (1013 - pin)*dt*0.6);
+    const tgt = Math.min(D, (1013 - pin)/100);
+    col = frozen ? tgt : col + (tgt - col)*Math.min(1, dt*3);
+    const flowing = pump && col >= D - 0.05;
+    if (flowing && dt > 0) out = Math.min(1, out + dt*0.15);
+    S.pm = {out:out > 0.05, fail:pump && D >= 12 && col > 9};
+    const wy = GY + D*SC, G = $('pmG'); G.innerHTML = '';
+    el('rect', {x:0, y:GY, width:360, height:350 - GY, fill:'var(--line)', opacity:.6}, G);
+    el('rect', {x:150, y:GY, width:80, height:350 - GY, fill:'var(--bg)'}, G);
+    el('rect', {x:150, y:wy, width:80, height:350 - wy, fill:'var(--water)', opacity:.6}, G);
+    for (let m = 0; m <= 15; m += 3) { el('line', {x1:118, x2:130, y1:GY + m*SC, y2:GY + m*SC, class:'tick'}, G); el('text', {x:114, y:GY + m*SC + 4, 'text-anchor':'end', class:'svgt'}, G).textContent = m + ' m'; }
+    const lim = wy - 10.13*SC;
+    if (lim > GY) { el('line', {x1:150, x2:300, y1:lim, y2:lim, class:'dash'}, G); el('text', {x:236, y:lim - 5, class:'svgt'}, G).textContent = '10,3 m nad wodą'; }
+    el('rect', {x:186, y:wy - col*SC, width:8, height:col*SC + 15, fill:'var(--water)'}, G);
+    el('path', {d:`M184 ${GY - 22} V${wy + 15} M196 ${GY - 22} V${wy + 15}`, stroke:'var(--glass)', 'stroke-width':2}, G);
+    el('rect', {x:168, y:GY - 46, width:44, height:26, rx:4, fill:'var(--ink)'}, G);
+    el('path', {d:`M212 ${GY - 38} H252 V${GY - 30}`, fill:'none', stroke:'var(--ink)', 'stroke-width':5}, G);
+    el('text', {x:190, y:GY - 52, 'text-anchor':'middle', class:'svgt'}, G).textContent = 'pompa';
+    if (flowing) el('line', {x1:252, y1:GY - 28, x2:252, y2:GY - 4, stroke:'var(--water)', 'stroke-width':4, class:'flow'}, G);
+    el('rect', {x:262 - 20, y:GY - 26, width:40, height:26, fill:'none', stroke:'var(--ink)', 'stroke-width':2}, G);
+    el('rect', {x:244, y:GY - 2 - 22*out, width:36, height:22*out, fill:'var(--water)', opacity:.7}, G);
+    $('pmDo').textContent = nv(D, 1) + ' m';
+    $('pmP').textContent = nv(pin, 0) + ' hPa';
+    $('pmH').textContent = nv(col, 2) + ' m';
+    $('pmS').textContent = flowing ? 'woda leci do wiadra' : (pump && D > 10.2 && col > 9.3) ? 'woda stoi ok. 10 m nad lustrem: dalej nie da rady!' : pump ? 'pompowanie…' : out > 0.95 ? 'wiadro pełne' : 'pompa stoi';
+  };
+})();
+
+/* ---------- balon ---------- */
+(function(){
+  let Tin = 15, h = 0, burn = false;
+  holdButton($('blBtn'), v => { burn = v; });
+  S.blnBurn = v => { burn = v; $('blBtn').classList.toggle('held', v); };
+  const V = 2800, m0 = 650, GR = 360, SCL = 16;
+  sims.balon = (dt, frozen) => {
+    if (!frozen) Tin = burn ? Math.min(120, Tin + 9*dt) : Math.max(15, Tin - 2.5*dt);
+    const k = 1 - 288/(273 + Tin);
+    const ht = k > 0 ? Math.max(0, -8500*Math.log(m0/(V*k)/1.225)) : 0;
+    if (frozen) h = ht; else { const dh = ht - h; h += Math.sign(dh)*Math.min(Math.abs(dh), Math.max(20, Math.abs(dh)*0.8)*dt); }
+    const rho = 1.225*Math.exp(-h/8500), rin = rho*288/(273 + Tin), Fw = rho*g*V, Q = (m0 + rin*V)*g;
+    S.bln = {h};
+    const G = $('blG'); G.innerHTML = '';
+    el('rect', {x:0, y:0, width:400, height:GR, fill:'var(--water-soft)'}, G);
+    el('rect', {x:0, y:GR, width:400, height:20, fill:'var(--gly)', opacity:.75}, G);
+    for (let m = 0; m <= 3000; m += 500) { const y = GR - m/SCL; el('line', {x1:0, x2:10, y1:y, y2:y, class:'tick'}, G); el('text', {x:14, y:y + 4, class:'svgt'}, G).textContent = m + ' m'; }
+    const by = GR - h/SCL;
+    el('ellipse', {cx:220, cy:by - 100, rx:56, ry:66, fill:'var(--accent)'}, G);
+    el('ellipse', {cx:220, cy:by - 100, rx:22, ry:66, fill:'var(--oil)'}, G);
+    el('path', {d:`M176 ${by - 60} L208 ${by - 22} M264 ${by - 60} L232 ${by - 22}`, stroke:'var(--ink)', 'stroke-width':1.2}, G);
+    el('rect', {x:206, y:by - 22, width:28, height:20, rx:2, fill:'var(--ink)', opacity:.8}, G);
+    if (burn) el('path', {d:`M214 ${by - 26} Q220 ${by - 52} 226 ${by - 26} Z`, fill:'var(--bad)'}, G);
+    el('text', {x:300, y:Math.max(16, by - 150), class:'svgt'}, G).textContent = nv(Tin, 0) + ' °C w środku';
+    $('blT').textContent = nv(Tin, 0) + ' °C';
+    $('blFw').textContent = nv(Fw/1000, 1) + ' kN';
+    $('blQ').textContent = nv(Q/1000, 1) + ' kN';
+    $('blH').textContent = nv(h, 0) + ' m';
+  };
+})();
+
+/* ---------- lewar ---------- */
+(function(){
+  let la = 25, lb = 3, act = false, broke = false;
+  const SC = 3, FLOOR = 330, HC = 30, sS = $('lwS');
+  $('lwStart').onclick = () => { if (la > 1.5) { act = true; broke = false; } };
+  $('lwReset').onclick = () => { la = 25; lb = 3; act = false; broke = false; };
+  S.lwStart = () => $('lwStart').click(); S.lwReset = () => $('lwReset').click();
+  sims.lewar = (dt, frozen) => {
+    const st = +sS.value, HA = st + la, HB = lb, d = HA - HB;
+    let q = 0;
+    if (act) {
+      if (la < 1.2 || lb > 28.5) { act = false; broke = la < 1.2; }
+      else q = Math.sign(d)*Math.sqrt(Math.abs(d))*1.3;
+    }
+    if (!frozen && act) { la = Math.max(0, la - q*dt); lb = Math.min(29, lb + q*dt); }
+    S.lw = {even:act && Math.abs(d) < 0.5};
+    const yA = FLOOR - st*SC, G = $('lwG'); G.innerHTML = '';
+    el('line', {x1:0, x2:400, y1:FLOOR, y2:FLOOR, stroke:'var(--muted)', 'stroke-width':2}, G);
+    if (st > 0) el('rect', {x:30, y:yA, width:130, height:FLOOR - yA, class:'ground'}, G);
+    el('rect', {x:40, y:yA - la*SC, width:110, height:la*SC, fill:'var(--water)', opacity:.6}, G);
+    el('path', {d:`M40 ${yA - HC*SC} V${yA} H150 V${yA - HC*SC}`, class:'glass'}, G);
+    el('rect', {x:250, y:FLOOR - lb*SC, width:110, height:lb*SC, fill:'var(--water)', opacity:.6}, G);
+    el('path', {d:`M250 ${FLOOR - HC*SC} V${FLOOR} H360 V${FLOOR - HC*SC}`, class:'glass'}, G);
+    el('text', {x:95, y:yA - HC*SC - 8, 'text-anchor':'middle', class:'svgt-b'}, G).textContent = 'A';
+    el('text', {x:305, y:FLOOR - HC*SC - 8, 'text-anchor':'middle', class:'svgt-b'}, G).textContent = 'B';
+    const topY = Math.min(yA, FLOOR) - HC*SC - 28;
+    const hose = `M120 ${yA - 6} V${topY + 20} Q120 ${topY} 140 ${topY} H255 Q275 ${topY} 275 ${topY + 20} V${FLOOR - 6}`;
+    el('path', {d:hose, fill:'none', stroke:'var(--glass)', 'stroke-width':10, 'stroke-linecap':'round'}, G);
+    if (act) el('path', {d:hose, fill:'none', stroke:'var(--water)', 'stroke-width':5, class:q >= 0 ? 'flow' : 'flowrev'}, G);
+    [[yA - la*SC, 160], [FLOOR - lb*SC, 240]].forEach(([y, x]) => el('line', {x1:x - 10, x2:x + 10, y1:y, y2:y, class:'dash'}, G));
+    $('lwSo').textContent = st + ' cm';
+    $('lwD').textContent = Math.abs(d) < 0.3 ? 'poziomy równe' : nv(Math.abs(d), 1) + ' cm (' + (d > 0 ? 'A wyżej' : 'B wyżej') + ')';
+    $('lwQ').textContent = act ? (Math.abs(q) < 0.15 ? 'poziomy wyrównane, woda stoi' : 'woda płynie z ' + (q > 0 ? 'A do B' : 'B do A')) : broke ? 'wężyk zassał powietrze: przepływ ustał' : 'wężyk pusty';
+  };
+})();
+
+/* ---------- krzyżówka ---------- */
+(function(){
+  const KW = [
+    ['PRÓŻNIA', 0, 'Przestrzeń bez cząsteczek gazu, np. nad rtęcią w rurce Torricellego.'],
+    ['BAROMETR', 1, 'Przyrząd do pomiaru ciśnienia atmosferycznego.'],
+    ['PRASA', 3, 'Hydrauliczna … zwielokrotnia siłę dzięki prawu Pascala.'],
+    ['WYSOKOŚCIOMIERZ', 4, 'Barometr z podziałką w metrach.'],
+    ['ATMOSFERA', 0, 'Warstwa powietrza otaczająca Ziemię.'],
+    ['LEWAR', 0, 'Wężyk do przelewania cieczy z naczynia położonego wyżej do położonego niżej.']];
+  const C = 4, grid = $('kwGrid'), clues = $('kwClues'), msg = $('kwMsg');
+  const rows = KW.map(([w, key, clue], r) => {
+    const row = document.createElement('div'); row.className = 'kwrow';
+    row.innerHTML = `<span class="kwnum">${r + 1}.</span>` + '<span class="kwsp"></span>'.repeat(C - key);
+    const cells = [...w].map((ch, i) => { const inp = document.createElement('input'); inp.className = 'kwcell' + (i === key ? ' key' : ''); inp.maxLength = 2; inp.autocomplete = 'off'; inp.setAttribute('aria-label', `Hasło ${r + 1}, litera ${i + 1}`); row.appendChild(inp); return inp; });
+    grid.appendChild(row);
+    const li = document.createElement('li'); li.textContent = clue + ` (${w.length} liter)`; clues.appendChild(li);
+    return {w, cells};
+  });
+  const all = rows.flatMap(r => r.cells);
+  all.forEach((inp, idx) => {
+    inp.addEventListener('input', () => {
+      const v = inp.value.slice(-1).toLocaleUpperCase('pl'); inp.value = v; inp.classList.remove('ok', 'no');
+      if (v && all[idx + 1]) all[idx + 1].focus();
+      if (rows.every(r => r.cells.every((c, i) => c.value === r.w[i]))) win();
+    });
+    inp.addEventListener('keydown', e => { if (e.key === 'Backspace' && !inp.value && all[idx - 1]) { all[idx - 1].focus(); e.preventDefault(); } });
+  });
+  function win(){ msg.textContent = 'Brawo! Hasło to PASKAL, jednostka ciśnienia.'; msg.style.color = 'var(--good)'; S.kwDone = true; all.forEach(c => c.classList.add('ok')); }
+  $('kwCheck').onclick = () => {
+    let bad = 0, empty = 0;
+    rows.forEach(r => r.cells.forEach((c, i) => { c.classList.remove('ok', 'no'); if (!c.value) empty++; else if (c.value === r.w[i]) c.classList.add('ok'); else { c.classList.add('no'); bad++; } }));
+    if (!bad && !empty) win();
+    else { msg.textContent = `Błędnych liter: ${bad}, pustych pól: ${empty}.`; msg.style.color = bad ? 'var(--bad)' : ''; }
+  };
+  $('kwShow').onclick = () => { rows.forEach(r => r.cells.forEach((c, i) => { c.value = r.w[i]; c.classList.remove('no'); c.classList.add('ok'); })); msg.textContent = 'Hasło: PASKAL.'; msg.style.color = ''; };
+  $('kwClear').onclick = () => { all.forEach(c => { c.value = ''; c.classList.remove('ok', 'no'); }); msg.textContent = ''; };
+  S.kwType = (r, p) => { const R = rows[r]; R.cells.forEach((c, i) => { c.value = i < Math.ceil(p*R.w.length) ? R.w[i] : ''; }); };
+  S.kwClear = () => $('kwClear').click();
+})();
+
 /* ---------- wyzwania ---------- */
 const pressed = (sel, key, val) => { const b = document.querySelector(sel + ' [aria-pressed="true"]'); return !!b && b.dataset[key] === val; };
 const num = id => +$(id).value;
@@ -2677,6 +3182,23 @@ const CH = {
     ['Znajdź ciśnienie, przy którym woda wrze w 120 °C.', () => S.sb && Math.abs(S.sb.tb - 120) <= 0.5]],
   'kartezjusz': [
     ['Opuść nurka na samo dno butelki.', () => S.kz && S.kz.bottom]],
+  'hamulce': [
+    ['Uzyskaj docisk klocków ponad 8000 N na każdym kole.', () => S.hb && S.hb.F2 > 8000]],
+  'wieza': [
+    ['Doprowadź wodę na wszystkie piętra bloku.', () => S.wz && S.wz.top === 9]],
+  'nadcisnienie': [
+    ['Ustaw podciśnienie równe 0,2 bara.', () => S.nc && Math.abs(S.nc.p - 0.813) <= 0.02]],
+  'planety': [
+    ['Sprawdź, co stałoby się z balonikiem na Marsie i na Wenus.', () => { S.plnSeen = S.plnSeen || new Set(); if (S.pln) S.plnSeen.add(S.pln); return S.plnSeen.has('Mars') && S.plnSeen.has('Wenus'); }]],
+  'pompa': [
+    ['Wypompuj wodę ze studni do wiadra.', () => S.pm && S.pm.out],
+    ['Sprawdź, czy pompa wyssie wodę z głębokości 12 m.', () => S.pm && S.pm.fail]],
+  'balon': [
+    ['Wznieś balon na wysokość ponad 1000 m.', () => S.bln && S.bln.h > 1000]],
+  'lewar': [
+    ['Przelej wodę lewarem tak, by poziomy się wyrównały.', () => S.lw && S.lw.even]],
+  'krzyzowka': [
+    ['Rozwiąż całą krzyżówkę.', () => !!S.kwDone]],
   'zadania': [
     ['Rozwiąż 3 losowe zadania z rzędu bez błędu.', () => (S.trStreak || 0) >= 3]]
 };
@@ -2705,7 +3227,8 @@ const chip = (sel, i) => () => { const b = document.querySelectorAll(sel + ' .ch
 const openWhy = (sid, i) => document.querySelectorAll(`.slide[data-id="${sid}"] details.why`).forEach((d, k) => d.open = k === i);
 const rowOn = (sel, i) => document.querySelectorAll(sel).forEach((r, k) => r.classList.toggle('on', k === i));
 const setLid = v => { const c = $('sLidC'); c.checked = v; c.dispatchEvent(new Event('change')); };
-const releaseHolds = () => { S.paPress && S.paPress(false); S.strawSuck && S.strawSuck(false); S.brHold && S.brHold(false); S.kzPress && S.kzPress(false); };
+const releaseHolds = () => { S.paPress && S.paPress(false); S.strawSuck && S.strawSuck(false); S.brHold && S.brHold(false); S.kzPress && S.kzPress(false); S.pmPress && S.pmPress(false); S.blnBurn && S.blnBurn(false); };
+const setCheck = (id, v) => { const c = $(id); c.checked = v; c.dispatchEvent(new Event('change')); };
 const whySteps = (sid, d) => [...document.querySelectorAll(`.slide[data-id="${sid}"] details.why`)].map((x, i) => ({d, run:() => openWhy(sid, i), cap:x.querySelector('summary').textContent + '. ' + [...x.querySelectorAll('p')].map(p => p.textContent).join(' ')}));
 const typeQ = (w, p) => { const q = $('glQ'); q.value = w.slice(0, Math.ceil(p*w.length)); q.dispatchEvent(new Event('input')); };
 const ease = p => p < .5 ? 2*p*p : 1 - Math.pow(-2*p + 2, 2)/2;
@@ -2905,6 +3428,45 @@ const DEMOS = {
     {d:5, run:() => { S.kzPress(false); rowOn('#kzSteps li', 3); }, cap:'Puszczamy butelkę: powietrze się rozpręża, wypycha wodę i nurek wypływa.'},
     {d:1, run:() => rowOn('#kzSteps li', -1)}]},
   'przyroda': {steps:whySteps('przyroda', 6)},
+  'hamulce': {steps:[
+    {d:3, run:() => { setCheck('hbAir', false); setVal('hbF', 0); }, cap:'Noga nie naciska pedału: płyn hamulcowy ma małe ciśnienie, klocki nie dotykają tarcz.'},
+    {d:4, tween:['hbF', 0, 400], cap:'Wciskamy pedał: ciśnienie płynu rośnie i rozchodzi się jednakowo do wszystkich kół.'},
+    {d:4, cap:'Tłoki przy kołach mają większe pole, więc dociskają klocki z siłą ok. 8000 N.'},
+    {d:2, tween:['hbF', 400, 0]},
+    {d:2, run:() => setCheck('hbAir', true), cap:'Teraz do przewodów dostało się powietrze.'},
+    {d:4, tween:['hbF', 0, 400], cap:'Pedał wchodzi głębiej, bo powietrze się ściska, a hamulce działają słabo. Niebezpieczne!'},
+    {d:2, run:() => { setCheck('hbAir', false); setVal('hbF', 200); }}]},
+  'wieza': {steps:[
+    {d:3, run:() => setVal('wzL', 10), cap:'Mało wody w wieży: woda dociera tylko do najniższych pięter.'},
+    {d:7, tween:['wzL', 10, 40], cap:'Napełniamy zbiornik: woda dociera coraz wyżej, a na dole ciśnienie rośnie. Każde 10 m to ok. 1 bar.'},
+    {d:4, cap:'Teraz poziom w wieży jest wyżej niż najwyższy kran, więc woda dociera na wszystkie piętra.'},
+    {d:4, tween:['wzL', 40, 24], cap:'Ludzie zużywają wodę i jej poziom w wieży spada. Na górnych piętrach robi się sucho.'}]},
+  'nadcisnienie': {steps:[...['Próżnia: zero ciśnienia, nie ma żadnego gazu.', 'W rurze odkurzacza jest podciśnienie: mniej niż na zewnątrz, więc powietrze wpada do środka.', 'Powietrze wokół nas: ok. 1 bar. Manometr pokazuje 0.', 'Piłka nożna: nadciśnienie ok. 0,9 bara.', 'Opona samochodu: bezwzględnie ok. 3,2 bara, ale manometr pokaże 2,2 bara.', 'Opona roweru szosowego: aż 7 barów!'].map((c, i) => ({d:4, run:chip('#ncPre', i), cap:c}))]},
+  'planety': {steps:[[2, 'Na Ziemi balonik ma 1 litr powietrza.'], [1, 'Na Wenus ogromne ciśnienie ściska balonik do ok. 11 mililitrów!'], [4, 'Na Marsie ciśnienie jest tak małe, że balonik rozdąłby się do ok. 170 litrów, o ile by nie pękł.'], [0, 'Na Merkurym jest prawie próżnia: balonik pęka.'], [5, 'Na Tytanie ciśnienie jest trochę wyższe niż na Ziemi, więc balonik jest odrobinę mniejszy.'], [3, 'Na Księżycu nie ma atmosfery, więc balonik pęka.']].map(([i, c]) => ({d:6, run:() => S.plnShow(i), cap:c}))},
+  'pompa': {steps:[
+    {d:3, run:() => { S.pmPress(false); setVal('pmD', 6); }, cap:'Studnia głęboka na 6 m. Pompa usuwa powietrze z rury.'},
+    {d:6, run:() => S.pmPress(true), cap:'Pompujemy: w rurze spada ciśnienie, a ciśnienie atmosferyczne wpycha wodę w górę.'},
+    {d:2, run:() => S.pmPress(false), cap:'Woda dotarła do wiadra.'},
+    {d:3, run:() => setVal('pmD', 13), cap:'Teraz studnia ma 13 m głębokości.'},
+    {d:7, run:() => S.pmPress(true), cap:'Pompujemy z całych sił, ale woda zatrzymuje się ok. 10 m nad lustrem wody. Ciśnienie atmosferyczne więcej nie zrównoważy!'},
+    {d:3, run:() => { S.pmPress(false); setVal('pmD', 6); }, cap:'Głębokie studnie mają pompy głębinowe, umieszczone na dole.'}]},
+  'balon': {steps:[
+    {d:3, run:() => S.blnBurn(false), cap:'Balon stoi na ziemi. Powietrze w czaszy ma temperaturę otoczenia.'},
+    {d:9, run:() => S.blnBurn(true), cap:'Włączamy palnik: gorące powietrze jest rzadsze, balon staje się lżejszy od wypieranego powietrza i się unosi.'},
+    {d:7, run:() => S.blnBurn(false), cap:'Wyłączamy palnik: powietrze w czaszy stygnie, wypór przestaje wystarczać i balon opada.'},
+    {d:5, run:() => S.blnBurn(true), cap:'Pilot steruje wysokością tylko palnikiem: grzeje, żeby się wznieść, i czeka, żeby opaść.'},
+    {d:6, run:() => S.blnBurn(false)}]},
+  'lewar': {steps:[
+    {d:3, run:() => { S.lwReset(); setVal('lwS', 30); }, cap:'Naczynie A stoi na podstawce, wyżej niż naczynie B.'},
+    {d:9, run:() => S.lwStart(), cap:'Zasysamy wodę do wężyka: woda płynie z A do B, choć najpierw musi przejść w górę!'},
+    {d:3, cap:'Gdy w naczyniu A zabraknie wody, wężyk zassie powietrze i przepływ ustanie.'},
+    {d:2, run:() => { S.lwReset(); setVal('lwS', 5); }, cap:'Teraz podstawka jest niska.'},
+    {d:9, run:() => S.lwStart(), cap:'Woda płynie, aż poziomy w obu naczyniach się wyrównają, jak w naczyniach połączonych.'}]},
+  'krzyzowka': {loop:false, end:'Teraz Ty: wpisz odpowiedzi w kratki. Litery w niebieskiej kolumnie utworzą hasło.', steps:[
+    {d:3, run:() => S.kwClear(), cap:'Krzyżówka: każda odpowiedź to pojęcie z prezentacji.'},
+    {d:3, anim:p => S.kwType(0, p), cap:'Na przykład hasło 1: przestrzeń bez cząsteczek gazu to PRÓŻNIA.'},
+    {d:3, cap:'Pierwsza litera hasła, w niebieskiej kolumnie, to P.'},
+    {d:1, run:() => S.kwClear()}]},
   'domowe': {steps:whySteps('domowe', 8)},
   'slowniczek': {steps:[
     {d:3, cap:'Słowniczek zawiera wszystkie pojęcia z prezentacji.'},
