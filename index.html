@@ -581,7 +581,7 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
   <section class="slide single" data-id="quiz" aria-label="Sprawdź się" hidden>
     <div class="text" style="max-width:none">
       <p class="eyebrow">Sprawdź się</p>
-      <h2>Trzynaście pytań</h2>
+      <h2>Szesnaście pytań</h2>
       <p class="score" id="qScore">Wynik: 0 / 10</p>
       <div class="quiz" id="quiz"></div>
     </div>
@@ -599,6 +599,8 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
         <div class="card"><h3>Pod wodą</h3><span class="formula">p = p₀ + ρ · g · h</span><p>W wodzie każde ok. 10 m głębokości dodaje 1 atmosferę.</p></div>
         <div class="card"><h3>Naczynia połączone</h3><span class="formula">ρ₁·h₁ = ρ₂·h₂</span><p>Słupy cieczy o różnych gęstościach równoważą się na poziomie granicy.</p></div>
         <div class="card"><h3>Wysokość</h3><span class="formula">↑ 5,5 km → p₀ / 2</span><p>Ciśnienie maleje z wysokością, a z nim temperatura wrzenia wody.</p></div>
+        <div class="card"><h3>Siła wyporu</h3><span class="formula">F<sub>w</sub> = ρ · g · V</span><p>Prawo Archimedesa: wypór równa się ciężarowi wypartej cieczy. Ciało tonie, gdy ma większą gęstość niż ciecz.</p></div>
+        <div class="card"><h3>Ciśnienie gazu</h3><span class="formula">uderzenia cząsteczek</span><p>Rośnie, gdy jest więcej cząsteczek, gdy gaz jest cieplejszy albo ma mniej miejsca.</p></div>
         <div class="card"><h3>Parcie</h3><span class="formula">F = p · S</span><p>Siła nacisku cieczy na dno lub ścianę. Na ścianę działa średnio połowa ciśnienia z dna.</p></div>
         <div class="card"><h3>Jednostki</h3><span class="formula">1 bar = 100 000 Pa</span><p>1 atm = 101 325 Pa, 1 mm Hg ≈ 133 Pa. Hekto = 100, kilo = 1000, mega = 1 000 000.</p></div>
         <div class="card"><h3>Prawo Pascala</h3><span class="formula">F₁ / S₁ = F₂ / S₂</span><p>Ciśnienie w zamkniętej cieczy rozchodzi się jednakowo. Prasa hydrauliczna zwielokrotnia siłę.</p></div>
@@ -1040,7 +1042,7 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
   </section>
 
   <!-- Błędy -->
-  <section class="slide single" data-id="bledy" data-part="Część IV · Ćwiczenia" aria-label="Najczęstsze błędy" hidden>
+  <section class="slide single" data-id="bledy" aria-label="Najczęstsze błędy" hidden>
     <div class="text" style="max-width:none">
       <p class="eyebrow">Część IV · ćwiczenia</p>
       <h2>Uważaj na te błędy</h2>
@@ -1066,6 +1068,206 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
       <div class="btnrow"><label for="glQ" class="sr">Szukaj pojęcia</label><input id="glQ" class="inp" style="width:260px" placeholder="Szukaj pojęcia…" autocomplete="off"></div>
       <dl class="gloss" id="gloss"></dl>
       <p class="expl" id="glNone" hidden>Nie znaleziono takiego pojęcia. Spróbuj innego słowa.</p>
+    </div>
+  </section>
+
+  <!-- Ciśnienie gazu -->
+  <section class="slide" data-id="gazy" aria-label="Skąd się bierze ciśnienie gazu" hidden>
+    <div class="text">
+      <p class="eyebrow">Część II · ciśnienie atmosferyczne</p>
+      <h2>Skąd się bierze ciśnienie gazu?</h2>
+      <p>Gaz składa się z ogromnej liczby cząsteczek, które bez przerwy chaotycznie się poruszają. Uderzają w ścianki naczynia, a każde uderzenie to malutka siła. Miliardy uderzeń w każdej sekundzie dają ciśnienie gazu.</p>
+      <div class="facts">
+        <div><h4>Ciśnienie rośnie, gdy</h4><ul><li>jest więcej cząsteczek</li><li>gaz jest cieplejszy</li><li>gaz ma mniej miejsca</li></ul></div>
+        <div><h4>Przykłady</h4><ul><li>pompowanie opony</li><li>opona nagrzana latem</li><li>ściskanie strzykawki</li></ul></div>
+      </div>
+      <p>Powietrze wokół nas to też gaz. Ciśnienie atmosferyczne to uderzenia cząsteczek powietrza w każdą powierzchnię, także w naszą skórę.</p>
+      <p class="note">Dlatego nie wolno wrzucać do ognia puszek po dezodorancie. Gaz w środku się nagrzewa, jego ciśnienie gwałtownie rośnie i puszka może wybuchnąć.</p>
+    </div>
+    <div class="lab">
+      <span class="live">Symulacja na żywo · cząsteczki gazu</span>
+      <canvas id="cGas" class="sim" style="aspect-ratio:420/300" role="img" aria-label="Cząsteczki gazu w naczyniu z tłokiem"></canvas>
+      <div class="controls">
+        <div class="ctl"><label for="gasN">Liczba cząsteczek</label><output id="gasNo"></output><input type="range" id="gasN" min="20" max="300" step="10" value="100"></div>
+        <div class="ctl"><label for="gasT">Temperatura</label><output id="gasTo"></output><input type="range" id="gasT" min="-50" max="250" step="5" value="20"></div>
+        <div class="ctl"><label for="gasV">Objętość (położenie tłoka)</label><output id="gasVo"></output><input type="range" id="gasV" min="40" max="100" step="5" value="100"></div>
+      </div>
+      <div class="readout">
+        <div class="hl"><div class="k">Ciśnienie gazu</div><div class="v" id="gasP"></div></div>
+        <div><div class="k">Uderzeń w ścianki / s</div><div class="v" id="gasH"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Siła wyporu -->
+  <section class="slide" data-id="wypor" aria-label="Siła wyporu i prawo Archimedesa" hidden>
+    <div class="text">
+      <p class="eyebrow">Część I · ciśnienie hydrostatyczne</p>
+      <h2>Siła wyporu: skąd się bierze?</h2>
+      <p>Ciecz naciska na zanurzone ciało ze wszystkich stron. Siły z boków się równoważą. Dolna ściana jest jednak głębiej niż górna, więc od dołu ciecz naciska mocniej. Różnica tych sił to <b>siła wyporu</b>, skierowana do góry.</p>
+      <div class="formula"><b>F<sub>w</sub></b> = ρ<sub>cieczy</sub> · g · V<sub>zanurzone</sub></div>
+      <p class="def"><b>Prawo Archimedesa:</b> na ciało zanurzone w cieczy działa siła wyporu równa ciężarowi cieczy wypartej przez to ciało.</p>
+      <p class="note">Siła wyporu nie zależy od głębokości. Głębiej rosną oba naciski, ale ich różnica zostaje taka sama.</p>
+    </div>
+    <div class="lab">
+      <svg viewBox="0 0 420 390" role="img" aria-label="Sześcian zanurzony w wodzie i siły nacisku"><g id="wG"></g></svg>
+      <div class="controls">
+        <div class="ctl"><label for="wH">Głębokość górnej ściany</label><output id="wHo"></output><input type="range" id="wH" min="0" max="1.2" step="0.05" value="0.2"></div>
+        <div class="ctl"><label for="wA">Długość krawędzi sześcianu</label><output id="wAo"></output><input type="range" id="wA" min="0.1" max="0.5" step="0.05" value="0.3"></div>
+      </div>
+      <div class="readout">
+        <div><div class="k">Nacisk od góry</div><div class="v" id="wFt"></div></div>
+        <div><div class="k">Nacisk od dołu</div><div class="v" id="wFb"></div></div>
+        <div class="hl"><div class="k">Siła wyporu</div><div class="v" id="wFw"></div></div>
+      </div>
+      <p class="calc" id="wCalc"></p>
+    </div>
+  </section>
+
+  <!-- Pływanie -->
+  <section class="slide" data-id="plywanie" aria-label="Warunki pływania ciał" hidden>
+    <div class="text">
+      <p class="eyebrow">Część I · ciśnienie hydrostatyczne</p>
+      <h2>Kiedy ciało pływa, a kiedy tonie?</h2>
+      <p>Porównujemy ciężar ciała z siłą wyporu. Prościej jest porównać gęstości ciała i cieczy:</p>
+      <ul class="legend">
+        <li><b>ρ ciała &gt; ρ cieczy</b>: ciało tonie.</li>
+        <li><b>ρ ciała = ρ cieczy</b>: ciało unosi się w cieczy na dowolnej głębokości.</li>
+        <li><b>ρ ciała &lt; ρ cieczy</b>: ciało wypływa i pływa częściowo zanurzone.</li>
+      </ul>
+      <p>Pływające ciało zanurza się tak głęboko, żeby wyparta ciecz ważyła tyle, ile ono samo. Lód ma gęstość 917 kg/m³, więc w wodzie zanurza się w ok. 92%. Dlatego z góry lodowej widać tylko wierzchołek.</p>
+      <p class="note">Stalowy statek pływa, bo jest pusty w środku. Jego średnia gęstość, razem z powietrzem w kadłubie, jest mniejsza niż gęstość wody.</p>
+    </div>
+    <div class="lab">
+      <span class="live">Symulacja na żywo · sześcian 10 cm</span>
+      <svg viewBox="0 0 420 320" role="img" aria-label="Sześcian wrzucony do cieczy"><g id="plG"></g></svg>
+      <div class="chips" id="plMat"></div>
+      <div class="chips" id="plLiq"></div>
+      <div class="readout">
+        <div><div class="k">Ciężar sześcianu</div><div class="v" id="plQ"></div></div>
+        <div><div class="k">Wypór przy pełnym zanurzeniu</div><div class="v" id="plF"></div></div>
+        <div class="hl"><div class="k">Wynik</div><div class="v" id="plR" style="font-family:var(--f-body);font-size:17px"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Wiatr -->
+  <section class="slide" data-id="wiatr" aria-label="Wyż, niż i wiatr" hidden>
+    <div class="text">
+      <p class="eyebrow">Część II · ciśnienie atmosferyczne</p>
+      <h2>Wyż, niż i wiatr</h2>
+      <p>Ciśnienie atmosferyczne nie wszędzie jest takie samo. Obszar, w którym ciśnienie jest wyższe niż dookoła, to <b>wyż (W)</b>. Obszar o niższym ciśnieniu to <b>niż (N)</b>.</p>
+      <p class="def">Powietrze płynie z miejsca o wyższym ciśnieniu do miejsca o niższym ciśnieniu. Tak powstaje <b>wiatr</b>.</p>
+      <p>Na mapach pogody linie łączące miejsca o tym samym ciśnieniu to <b>izobary</b>. Gdy leżą blisko siebie, różnica ciśnień na małej odległości jest duża i wieje mocny wiatr.</p>
+      <p class="note">Wiatr nie płynie prosto od wyżu do niżu, bo Ziemia się obraca. Na naszej półkuli wiatr krąży wokół niżu przeciwnie do ruchu wskazówek zegara.</p>
+    </div>
+    <div class="lab">
+      <span class="live">Symulacja na żywo · mapa pogody</span>
+      <canvas id="cWind" class="sim" style="aspect-ratio:420/280" role="img" aria-label="Mapa z wyżem i niżem oraz płynącym powietrzem"></canvas>
+      <div class="controls">
+        <div class="ctl"><label for="wiH">Ciśnienie w środku wyżu</label><output id="wiHo"></output><input type="range" id="wiH" min="1010" max="1050" step="1" value="1025"></div>
+        <div class="ctl"><label for="wiL">Ciśnienie w środku niżu</label><output id="wiLo"></output><input type="range" id="wiL" min="960" max="1009" step="1" value="1000"></div>
+      </div>
+      <div class="readout">
+        <div><div class="k">Różnica ciśnień</div><div class="v" id="wiD"></div></div>
+        <div class="hl"><div class="k">Wiatr</div><div class="v" id="wiS" style="font-family:var(--f-body);font-size:17px"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Temperatura wrzenia -->
+  <section class="slide" data-id="szybkowar" aria-label="Ciśnienie a temperatura wrzenia" hidden>
+    <div class="text">
+      <p class="eyebrow">Część II · ciśnienie atmosferyczne</p>
+      <h2>Ciśnienie a temperatura wrzenia</h2>
+      <p>Woda wrze wtedy, gdy pęcherzyki pary w jej wnętrzu mogą pokonać ciśnienie powietrza nad nią. Przy niższym ciśnieniu dzieje się to łatwiej, więc woda wrze w niższej temperaturze. Przy wyższym ciśnieniu temperatura wrzenia rośnie.</p>
+      <ul class="legend">
+        <li><b>Everest</b> (ok. 314 hPa): woda wrze w ok. 70 °C. Jajka nie da się tam ugotować na twardo.</li>
+        <li><b>Rysy</b> (ok. 750 hPa): ok. 91 °C.</li>
+        <li><b>Poziom morza</b> (1013 hPa): 100 °C.</li>
+        <li><b>Szybkowar</b> (ok. 2000 hPa): ok. 120 °C. Obiad gotuje się nawet dwa razy szybciej.</li>
+      </ul>
+      <p class="note">Szybkowar ma szczelną pokrywkę i zawór bezpieczeństwa, który wypuszcza parę, gdy ciśnienie robi się za duże.</p>
+    </div>
+    <div class="lab">
+      <span class="live">Symulacja na żywo · gotowanie wody</span>
+      <svg viewBox="0 0 360 310" role="img" aria-label="Garnek z wodą na kuchence i termometr"><g id="sbG"></g></svg>
+      <div class="chips" id="sbPre">
+        <button class="chip" data-p="314">Everest · 314 hPa</button>
+        <button class="chip" data-p="750">Rysy · 750 hPa</button>
+        <button class="chip" data-p="1013" aria-pressed="true">Poziom morza · 1013 hPa</button>
+        <button class="chip" data-p="2000">Szybkowar · 2000 hPa</button>
+      </div>
+      <div class="controls">
+        <div class="ctl"><label for="sbP">Ciśnienie nad wodą</label><output id="sbPo"></output><input type="range" id="sbP" min="300" max="2100" step="1" value="1013"></div>
+      </div>
+      <button class="navbtn" id="sbReset" style="justify-self:start">Nalej zimnej wody i grzej od nowa</button>
+      <div class="readout">
+        <div class="hl"><div class="k">Temperatura wrzenia</div><div class="v" id="sbTb"></div></div>
+        <div><div class="k">Temperatura wody</div><div class="v" id="sbT"></div></div>
+        <div><div class="k">Stan</div><div class="v" id="sbS" style="font-family:var(--f-body);font-size:17px"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Nurek Kartezjusza -->
+  <section class="slide" data-id="kartezjusz" aria-label="Nurek Kartezjusza" hidden>
+    <div class="text">
+      <p class="eyebrow">Część III · oba ciśnienia razem</p>
+      <h2>Nurek Kartezjusza</h2>
+      <p>To klasyczna zabawka fizyczna. W plastikowej butelce pełnej wody pływa mała probówka, otworem w dół, z pęcherzykiem powietrza w środku.</p>
+      <ol class="derive" id="kzSteps">
+        <li>Ściskasz butelkę i ciśnienie w całej wodzie rośnie (prawo Pascala).</li>
+        <li>Większe ciśnienie ściska pęcherzyk powietrza w nurku i do środka wpływa woda.</li>
+        <li>Nurek wypiera teraz mniej wody, więc siła wyporu maleje i nurek tonie.</li>
+        <li>Puszczasz butelkę: powietrze się rozpręża, wypycha wodę i nurek wypływa.</li>
+      </ol>
+      <p class="note">Tak samo działa łódź podwodna. Wpuszcza wodę do zbiorników balastowych, żeby się zanurzyć, i wypycha ją sprężonym powietrzem, żeby się wynurzyć.</p>
+    </div>
+    <div class="lab">
+      <span class="live">Symulacja na żywo</span>
+      <svg viewBox="0 0 360 350" role="img" aria-label="Butelka z wodą i nurkiem Kartezjusza"><g id="kzG"></g></svg>
+      <button class="navbtn primary holdbtn" id="kzBtn" style="justify-self:start">Ściśnij butelkę (przytrzymaj)</button>
+      <div class="readout">
+        <div class="hl"><div class="k">Ciśnienie w wodzie</div><div class="v" id="kzP"></div></div>
+        <div><div class="k">Powietrze w nurku</div><div class="v" id="kzV"></div></div>
+        <div><div class="k">Nurek</div><div class="v" id="kzS" style="font-family:var(--f-body);font-size:17px"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ciśnienie w przyrodzie -->
+  <section class="slide single" data-id="przyroda" aria-label="Ciśnienie w przyrodzie" hidden>
+    <div class="text" style="max-width:none">
+      <p class="eyebrow">Część III · oba ciśnienia razem</p>
+      <h2>Ciśnienie w przyrodzie</h2>
+      <p>Zwierzęta i rośliny przystosowały się do życia pod różnym ciśnieniem. Kliknij, żeby dowiedzieć się jak.</p>
+      <div class="whys">
+        <details class="why"><summary>Żyrafa</summary><p>Serce żyrafy musi wypchnąć krew ok. 2 metry w górę, do mózgu. Dlatego żyrafa ma ciśnienie krwi mniej więcej dwa razy wyższe niż człowiek. Specjalne naczynia chronią jej mózg, gdy schyla głowę do wodopoju.</p></details>
+        <details class="why"><summary>Ryby głębinowe</summary><p>Żyją pod ciśnieniem setek atmosfer. Ich ciała zawierają mało powietrza, a dużo wody, której prawie nie da się ścisnąć. Dlatego ciśnienie ich nie zgniata.</p></details>
+        <details class="why"><summary>Kaszalot</summary><p>Nurkuje na głębokość ponad 1000 metrów. Jego płuca zapadają się pod ciśnieniem wody, a tlen magazynuje głównie we krwi i mięśniach.</p></details>
+        <details class="why"><summary>Pęcherz pławny ryb</summary><p>Ryba zmienia ilość gazu w pęcherzu pławnym. Dzięki temu bez wysiłku unosi się na wybranej głębokości, podobnie jak nurek Kartezjusza.</p></details>
+        <details class="why"><summary>Przyssawki ośmiornicy</summary><p>Przyssawka wypycha wodę spod siebie i zmniejsza pod sobą ciśnienie. Woda z zewnątrz mocno dociska ją do skały albo do ofiary.</p></details>
+        <details class="why"><summary>Woda w drzewach</summary><p>Woda paruje z liści i „ciągnie” za sobą wodę w cienkich rurkach w pniu, aż od korzeni. Tak woda dociera na szczyt drzew wysokich na ponad 100 metrów.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Doświadczenia domowe -->
+  <section class="slide single" data-id="domowe" data-part="Część IV · Ćwiczenia" aria-label="Doświadczenia do zrobienia w domu" hidden>
+    <div class="text" style="max-width:none">
+      <p class="eyebrow">Część IV · ćwiczenia</p>
+      <h2>Doświadczenia do zrobienia w domu</h2>
+      <p>Wszystkie doświadczenia wymagają tylko rzeczy z kuchni. Kliknij, żeby zobaczyć instrukcję. <b>Doświadczenia z gorącą wodą wykonuj tylko z dorosłym.</b></p>
+      <div class="whys">
+        <details class="why"><summary>Szklanka wody i kartka</summary><p><b>Potrzebujesz:</b> szklanki, wody i kartki z bloku.</p><p><b>Zrób:</b> nalej wody do pełna, przykryj kartką, przytrzymaj ją dłonią i odwróć szklankę nad miską. Zabierz dłoń.</p><p><b>Dlaczego:</b> kartka nie spada, bo powietrze naciska na nią od dołu mocniej, niż woda od góry.</p></details>
+        <details class="why"><summary>Butelka z dziurkami</summary><p><b>Potrzebujesz:</b> plastikowej butelki, gwoździa i taśmy klejącej.</p><p><b>Zrób:</b> zrób dziurki na trzech wysokościach, zaklej je taśmą i napełnij butelkę wodą. Nad zlewem zerwij taśmę.</p><p><b>Dlaczego:</b> z najniższej dziurki woda tryska najmocniej, bo tam ciśnienie hydrostatyczne jest największe.</p></details>
+        <details class="why"><summary>Nurek Kartezjusza</summary><p><b>Potrzebujesz:</b> butelki z wodą, nakrętki od długopisu i kawałka plasteliny.</p><p><b>Zrób:</b> obciąż nakrętkę plasteliną tak, by ledwo pływała, wrzuć ją do pełnej butelki i zakręć. Ściśnij butelkę.</p><p><b>Dlaczego:</b> rośnie ciśnienie, powietrze w nakrętce się ściska i nurek tonie.</p></details>
+        <details class="why"><summary>Pipeta ze słomki</summary><p><b>Potrzebujesz:</b> słomki i szklanki z wodą.</p><p><b>Zrób:</b> włóż słomkę do wody, zatkaj palcem górny koniec i wyjmij słomkę.</p><p><b>Dlaczego:</b> woda nie wypływa, bo od dołu podtrzymuje ją ciśnienie atmosferyczne. Gdy odetkasz palec, woda wypłynie.</p></details>
+        <details class="why"><summary>Balonik w butelce</summary><p><b>Potrzebujesz:</b> plastikowej butelki i balonika.</p><p><b>Zrób:</b> włóż balonik do butelki, a jego wylot naciągnij na szyjkę. Spróbuj go nadmuchać. Potem zrób w butelce dziurkę i spróbuj jeszcze raz.</p><p><b>Dlaczego:</b> bez dziurki powietrze w butelce nie ma dokąd uciec, jego ciśnienie rośnie i nie pozwala nadmuchać balonika.</p></details>
+        <details class="why"><summary>Poziomica z wężyka</summary><p><b>Potrzebujesz:</b> przezroczystego wężyka i wody z barwnikiem.</p><p><b>Zrób:</b> napełnij wężyk wodą i podnieś oba końce. Przesuwaj je w górę i w dół.</p><p><b>Dlaczego:</b> to naczynia połączone. Woda w obu końcach zawsze ustawia się na tej samej wysokości.</p></details>
+        <details class="why"><summary>Zgnieciona butelka</summary><p><b>Potrzebujesz:</b> plastikowej butelki i ciepłej (nie wrzącej) wody z kranu, z pomocą dorosłego.</p><p><b>Zrób:</b> przepłucz butelkę ciepłą wodą, wylej ją, szybko zakręć i włóż butelkę do lodówki.</p><p><b>Dlaczego:</b> powietrze w środku się ochładza i jego ciśnienie spada. Ciśnienie atmosferyczne z zewnątrz zgniata butelkę.</p></details>
+      </div>
     </div>
   </section>
 
@@ -1181,9 +1383,11 @@ function chipGroup(container, onPick){
 }
 
 /* ---------- Nawigacja ---------- */
-const ORDER = ['start','cisnienie','jednostki','hydro-wstep','wyprowadzenie','hydrostatyka','manometr','paradoks','parcie','pascal','naczynia','hydro-zycie',
-  'atm-wstep','atmosfera','torricelli','barometr','przyrzady','wysokosc','atm-zycie','magdeburg','nurek','organizm','historia','porownanie','segreguj',
-  'bledy','zadania','quiz','podsumowanie','slowniczek'];
+const ORDER = ['start','cisnienie','jednostki',
+  'hydro-wstep','wyprowadzenie','hydrostatyka','manometr','paradoks','parcie','pascal','naczynia','wypor','plywanie','hydro-zycie',
+  'atm-wstep','gazy','atmosfera','torricelli','barometr','wiatr','przyrzady','wysokosc','szybkowar','atm-zycie','magdeburg',
+  'nurek','kartezjusz','organizm','przyroda','historia','porownanie','segreguj',
+  'domowe','bledy','zadania','quiz','podsumowanie','slowniczek'];
 ORDER.forEach(id => { const s = document.querySelector(`.slide[data-id="${id}"]`); if (s) $('main').appendChild(s); });
 const slides = [...document.querySelectorAll('.slide')];
 const ids = slides.map(s => s.dataset.id);
@@ -1811,6 +2015,12 @@ fromHash();
      o:['W stratosferze','W troposferze','W termosferze'], a:1, e:'Troposfera sięga do ok. 12 km. Są w niej chmury, opady i większość powietrza.'},
     {q:'Dlaczego ciśnienie hydrostatyczne nie zależy od pola dna?',
      o:['Bo we wzorze p = ρ·S·h·g / S pole S się skraca','Bo ciecz nie ma masy','Bo dno zawsze ma 1 m²'], a:0, e:'Większe dno to więcej cieczy i większy ciężar, ale też większa powierzchnia. Te dwa efekty się znoszą.'},
+    {q:'Skąd się bierze siła wyporu?',
+     o:['Z różnicy nacisku cieczy na dolną i górną ścianę ciała','Z ruchu cieczy','Z przyciągania magnetycznego'], a:0, e:'Dolna ściana jest głębiej, więc ciecz naciska na nią mocniej niż na górną.'},
+    {q:'Kawałek lodu (917 kg/m³) wrzucony do wody…',
+     o:['tonie','pływa częściowo zanurzony','unosi się w połowie głębokości'], a:1, e:'Lód ma mniejszą gęstość niż woda, więc pływa. Zanurza się w ok. 92%.'},
+    {q:'Dlaczego w szybkowarze obiad gotuje się szybciej?',
+     o:['Bo ciśnienie jest wyższe i woda wrze w ok. 120 °C','Bo pokrywka sama grzeje','Bo para jest zimniejsza'], a:0, e:'Wyższe ciśnienie podnosi temperaturę wrzenia wody.'},
     {q:'Dlaczego w wysokich górach woda wrze w temperaturze niższej niż 100 °C?',
      o:['Bo jest tam zimniej','Bo ciśnienie atmosferyczne jest niższe','Bo woda jest tam czystsza'], a:1, e:'Temperatura wrzenia rośnie z ciśnieniem. Na Rysach (ok. 750 hPa) woda wrze w ok. 91 °C.'},
     {q:'Dlaczego Torricelli użył rtęci, a nie wody?',
@@ -2178,7 +2388,11 @@ fromHash();
     ['Próżnia', 'Przestrzeń, w której prawie nie ma cząsteczek gazu, np. nad rtęcią w rurce Torricellego.'],
     ['Niż i wyż', 'Obszary o ciśnieniu niższym lub wyższym niż w otoczeniu. Niż zwykle przynosi opady, wyż pogodę bez opadów.'],
     ['Atmosfera', 'Warstwa powietrza otaczająca Ziemię: troposfera, stratosfera, mezosfera i termosfera.'],
-    ['Milimetr słupa rtęci (mm Hg)', 'Jednostka ciśnienia równa ok. 133 Pa. Używana przy pomiarze ciśnienia krwi.']];
+    ['Milimetr słupa rtęci (mm Hg)', 'Jednostka ciśnienia równa ok. 133 Pa. Używana przy pomiarze ciśnienia krwi.'],
+    ['Siła wyporu', 'Siła, z jaką ciecz lub gaz wypycha zanurzone ciało do góry: F = ρ · g · V.'],
+    ['Prawo Archimedesa', 'Na ciało zanurzone w cieczy działa siła wyporu równa ciężarowi cieczy wypartej przez to ciało.'],
+    ['Izobara', 'Linia na mapie pogody łącząca miejsca o tym samym ciśnieniu atmosferycznym.'],
+    ['Temperatura wrzenia', 'Temperatura, w której ciecz wrze. Dla wody na poziomie morza to 100 °C. Rośnie, gdy rośnie ciśnienie.']];
   const norm = s => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/ł/g, 'l');
   const dl = $('gloss');
   const items = T.map(([t, d]) => { const w = document.createElement('div'); w.innerHTML = `<dt>${t}</dt><dd>${d}</dd>`; w.dataset.k = norm(t + ' ' + d); dl.appendChild(w); return w; });
@@ -2187,6 +2401,205 @@ fromHash();
     items.forEach(w => { const ok = !q || w.dataset.k.includes(q); w.hidden = !ok; if (ok) n++; });
     $('glNone').hidden = n > 0;
   });
+})();
+
+/* ---------- ciśnienie gazu ---------- */
+(function(){
+  const W = 420, H = 300, cv = $('cGas'), sN = $('gasN'), sT = $('gasT'), sV = $('gasV');
+  const P = []; let hits = 0, acc = 0, rate = 0, lastT = null;
+  const sp = () => 130*Math.sqrt((+sT.value + 273)/293);
+  function addP(n){ for (let i = 0; i < n; i++) { const a = Math.random()*6.283, v = sp()*(0.6 + Math.random()*0.8); P.push({x:20 + Math.random()*150, y:20 + Math.random()*260, vx:Math.cos(a)*v, vy:Math.sin(a)*v}); } }
+  addP(100);
+  sims.gazy = dt => {
+    const ctx = fitCanvas(cv, W, H); if (!ctx) return;
+    const N = +sN.value, T = +sT.value, V = +sV.value;
+    while (P.length < N) addP(1);
+    if (P.length > N) P.length = N;
+    if (lastT !== null && lastT !== T) { const f = Math.sqrt((T + 273)/(lastT + 273)); P.forEach(p => { p.vx *= f; p.vy *= f; }); }
+    lastT = T;
+    const xr = 10 + 380*V/100;
+    for (const p of P) {
+      p.x += p.vx*dt; p.y += p.vy*dt;
+      if (p.x < 14) { p.x = 14; p.vx = Math.abs(p.vx); hits++; }
+      if (p.x > xr - 4) { p.x = xr - 4; p.vx = -Math.abs(p.vx); hits++; }
+      if (p.y < 14) { p.y = 14; p.vy = Math.abs(p.vy); hits++; }
+      if (p.y > H - 14) { p.y = H - 14; p.vy = -Math.abs(p.vy); hits++; }
+    }
+    acc += dt; if (acc >= 0.5) { rate = hits/acc; hits = 0; acc = 0; }
+    const pr = 1013*(N/100)*((T + 273)/293)/(V/100);
+    S.gasP = pr;
+    $('gasNo').textContent = N; $('gasTo').textContent = T + ' °C'; $('gasVo').textContent = V + ' %';
+    $('gasP').textContent = nv(pr, 0) + ' hPa'; $('gasH').textContent = nv(rate, 0);
+    ctx.clearRect(0, 0, W, H);
+    ctx.strokeStyle = CC['--glass']; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(W - 4, 10); ctx.lineTo(10, 10); ctx.lineTo(10, H - 10); ctx.lineTo(W - 4, H - 10); ctx.stroke();
+    ctx.fillStyle = CC['--ink']; ctx.fillRect(xr, 12, 10, H - 24); ctx.fillRect(xr + 10, H/2 - 4, W - xr - 10, 8);
+    const hot = Math.max(0, Math.min(1, (T + 50)/300));
+    ctx.fillStyle = hot > .6 ? CC['--accent'] : CC['--water'];
+    P.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, 3, 0, 6.283); ctx.fill(); });
+    ctx.fillStyle = CC['--muted']; ctx.font = '12px "IBM Plex Mono", monospace'; ctx.textAlign = 'right';
+    ctx.fillText('tłok', W - 6, H/2 - 10);
+  };
+})();
+
+/* ---------- siła wyporu ---------- */
+(function(){
+  const sA = $('wA'), sH = $('wH'), G = $('wG'), PX = 110, TOP = 90, Fmax = 1000*10*1.7*0.25;
+  const Lf = F => 8 + 70*F/Fmax;
+  function draw(){
+    const a = +sA.value, h1 = +sH.value, A = a*a, Ft = 1000*g*h1*A, Fb = 1000*g*(h1 + a)*A, Fw = Fb - Ft, Fs = 1000*g*(h1 + a/2)*A;
+    S.wyp = {h:h1};
+    $('wHo').textContent = nv(h1, 2) + ' m'; $('wAo').textContent = nv(a, 2) + ' m';
+    G.innerHTML = '';
+    el('rect', {x:60, y:TOP, width:300, height:2.6*PX, fill:'var(--water)', opacity:.42}, G);
+    el('path', {d:`M60 ${TOP - 20} V${TOP + 2.6*PX} H360 V${TOP - 20}`, class:'glass'}, G);
+    for (let d = 0; d <= 2.5; d += 0.5) { const y = TOP + d*PX; el('line', {x1:48, x2:60, y1:y, y2:y, class:'tick'}, G); el('text', {x:44, y:y + 4, 'text-anchor':'end', class:'svgt'}, G).textContent = nv(d, 1) + ' m'; }
+    const s = a*PX, x = 210 - s/2, y = TOP + h1*PX;
+    el('rect', {x, y, width:s, height:s, fill:'var(--oil)', stroke:'var(--ink)', 'stroke-width':1.5}, G);
+    arrow(G, 210, y - 4 - Lf(Ft), 210, y - 4);
+    arrow(G, 210, y + s + 4 + Lf(Fb), 210, y + s + 4);
+    arrow(G, x - 4 - Lf(Fs)*0.6, y + s/2, x - 4, y + s/2);
+    arrow(G, x + s + 4 + Lf(Fs)*0.6, y + s/2, x + s + 4, y + s/2);
+    el('text', {x:220, y:Math.max(12, y - 8 - Lf(Ft)/2), class:'svgt-b'}, G).textContent = 'od góry';
+    el('text', {x:220, y:y + s + 8 + Lf(Fb)/2, class:'svgt-b'}, G).textContent = 'od dołu';
+    $('wFt').textContent = nv(Ft, 0) + ' N';
+    $('wFb').textContent = nv(Fb, 0) + ' N';
+    $('wFw').textContent = nv(Fw, 0) + ' N ↑';
+    $('wCalc').innerHTML = `<span class="lbl">Obliczenie (S ściany = ${nv(A,4)} m²)</span>od góry: 1000 · 10 · ${nv(h1,2)} · ${nv(A,4)} = ${nv(Ft,0)} N<br>od dołu: 1000 · 10 · ${nv(h1 + a,2)} · ${nv(A,4)} = ${nv(Fb,0)} N<br>wypór = ${nv(Fb,0)} − ${nv(Ft,0)} = <b>${nv(Fw,0)} N</b> = ρ · g · V = 1000 · 10 · ${nv(a*A,4)}`;
+  }
+  sA.oninput = sH.oninput = draw; draw();
+})();
+
+/* ---------- pływanie ---------- */
+(function(){
+  const MAT = [['Korek', 240, '--oil'], ['Drewno', 600, '--accent'], ['Lód', 917, '--surface'], ['Plastik PVC', 1400, '--alc'], ['Stal', 7850, '--mercury']];
+  const LIQ = [['Woda', 1000, '--water'], ['Woda morska', 1025, '--sea'], ['Alkohol', 789, '--alc'], ['Rtęć', 13534, '--mercury']];
+  let m = MAT[1], l = LIQ[0], y = 10, vy = 0;
+  const SURF = 110, BOT = 300, B = 70;
+  const mk = (box, list, cb, def) => { list.forEach((it, i) => { const b = document.createElement('button'); b.className = 'chip'; b.textContent = it[0] + ' · ' + it[1]; b.dataset.i = i; b.setAttribute('aria-pressed', i === def ? 'true' : 'false'); box.appendChild(b); }); chipGroup(box, b => { cb(list[+b.dataset.i]); y = 10; vy = 0; }); };
+  mk($('plMat'), MAT, v => m = v, 1);
+  mk($('plLiq'), LIQ, v => l = v, 0);
+  const target = () => { const f = m[1]/l[1]; return f < 1 ? SURF - B*(1 - f) : BOT - B; };
+  sims.plywanie = (dt, frozen) => {
+    const t = target();
+    if (frozen) { y = t; vy = 0; }
+    else {
+      if (y + B < SURF) vy += 900*dt; else { const a = -14*(y - t) - 4.5*vy; vy += a*dt; }
+      y += vy*dt; if (y > BOT - B) { y = BOT - B; vy = 0; }
+    }
+    const G = $('plG'); G.innerHTML = '';
+    el('rect', {x:60, y:SURF, width:300, height:BOT - SURF, fill:`var(${l[2]})`, opacity:.5}, G);
+    el('path', {d:`M60 40 V${BOT} H360 V40`, class:'glass'}, G);
+    el('rect', {x:175, y, width:B, height:B, fill:`var(${m[2]})`, stroke:'var(--ink)', 'stroke-width':1.5, rx:3}, G);
+    el('text', {x:210, y:y + B/2 + 4, 'text-anchor':'middle', class:'svgt-b'}, G).textContent = m[0];
+    el('text', {x:354, y:SURF + 18, 'text-anchor':'end', class:'svgt'}, G).textContent = l[0] + ' · ' + nv(l[1], 0) + ' kg/m³';
+    const f = m[1]/l[1];
+    $('plQ').textContent = nv(m[1]/100, 2) + ' N';
+    $('plF').textContent = nv(l[1]/100, 2) + ' N';
+    $('plR').textContent = f < 0.995 ? `pływa, zanurzony w ${nv(f*100, 0)}%` : f > 1.005 ? 'tonie' : 'unosi się w cieczy';
+    S.pl = {rb:m[1], rl:l[1]};
+  };
+})();
+
+/* ---------- wiatr ---------- */
+(function(){
+  const W = 420, H = 280, cv = $('cWind'), sH = $('wiH'), sL = $('wiL'), HX = 100, HY = 140, LX = 320, LY = 140;
+  let parts = [];
+  sims.wiatr = dt => {
+    const ctx = fitCanvas(cv, W, H); if (!ctx) return;
+    const pH = +sH.value, pL = +sL.value, d = pH - pL, mid = (pH + pL)/2, speed = 12 + d*3.2;
+    S.wind = {d};
+    if (dt > 0 && parts.length < 260) { const n = dt*(6 + d*0.9); for (let k = 0; k < n || Math.random() < n - k; k++) { parts.push({x:HX + (Math.random() - .5)*60, y:HY + (Math.random() - .5)*120}); if (k > 20) break; } }
+    parts = parts.filter(p => {
+      const dx = LX - p.x, dy = LY - p.y, dist = Math.hypot(dx, dy);
+      if (dist < 14 || p.x < 0 || p.x > W || p.y < 0 || p.y > H) return false;
+      const ux = dx/dist, uy = dy/dist, sw = Math.min(1, 60/dist);
+      p.vx = ux*speed + uy*speed*0.45*sw; p.vy = uy*speed - ux*speed*0.45*sw;
+      p.x += p.vx*dt; p.y += p.vy*dt; return true;
+    });
+    ctx.clearRect(0, 0, W, H);
+    ctx.lineWidth = 1.2; ctx.font = '11px "IBM Plex Mono", monospace'; ctx.textAlign = 'center';
+    for (let v = Math.ceil(mid/4)*4; v < pH; v += 4) { const r = 115*(pH - v)/(pH - mid); if (r < 8) continue; ctx.strokeStyle = CC['--line']; ctx.beginPath(); ctx.arc(HX, HY, r, 0, 6.283); ctx.stroke(); }
+    for (let v = Math.floor(mid/4)*4; v > pL; v -= 4) { const r = 105*(v - pL)/(mid - pL); if (r < 8) continue; ctx.strokeStyle = CC['--line']; ctx.beginPath(); ctx.arc(LX, LY, r, 0, 6.283); ctx.stroke(); }
+    ctx.strokeStyle = CC['--muted']; ctx.lineWidth = 2; ctx.lineCap = 'round';
+    parts.forEach(p => { const s = 0.09; ctx.beginPath(); ctx.moveTo(p.x - p.vx*s, p.y - p.vy*s); ctx.lineTo(p.x, p.y); ctx.stroke(); });
+    ctx.font = '700 34px "Bricolage Grotesque", sans-serif';
+    ctx.fillStyle = CC['--water']; ctx.fillText('W', HX, HY + 12);
+    ctx.fillStyle = CC['--accent']; ctx.fillText('N', LX, LY + 12);
+    ctx.font = '12px "IBM Plex Mono", monospace'; ctx.fillStyle = CC['--ink'];
+    ctx.fillText(pH + ' hPa', HX, HY + 32); ctx.fillText(pL + ' hPa', LX, LY + 32);
+    $('wiHo').textContent = pH + ' hPa'; $('wiLo').textContent = pL + ' hPa';
+    $('wiD').textContent = d + ' hPa';
+    $('wiS').textContent = d < 12 ? 'słaby' : d < 25 ? 'umiarkowany' : d < 45 ? 'silny' : 'wichura!';
+  };
+})();
+
+/* ---------- temperatura wrzenia ---------- */
+(function(){
+  const sP = $('sbP'); let Tw = 20, bub = [], acc = 0;
+  const Tb = p => 1/(1/373.15 - (8.314/40660)*Math.log(p/1013.25)) - 273.15;
+  chipGroup($('sbPre'), b => { sP.value = b.dataset.p; Tw = 20; bub = []; });
+  $('sbReset').onclick = () => { Tw = 20; bub = []; };
+  sP.addEventListener('input', () => { $('sbPre').querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', 'false')); if (Tw > Tb(+sP.value)) Tw = Tb(+sP.value); });
+  sims.szybkowar = (dt, frozen) => {
+    const p = +sP.value, tb = Tb(p);
+    Tw = frozen ? tb : Math.min(tb, Tw + 22*dt);
+    const boiling = Tw >= tb - 0.05;
+    S.sb = {tb};
+    if (boiling && dt > 0) { acc += dt; while (acc > 0.05) { acc -= 0.05; bub.push({x:115 + Math.random()*130, y:276, r:2 + Math.random()*3}); } }
+    bub = bub.filter(b => (b.y -= 70*dt) > 172);
+    const G = $('sbG'); G.innerHTML = '';
+    [130, 160, 190, 220].forEach(x => el('path', {d:`M${x} 300 l12 -22 l12 22 Z`, fill:'var(--accent)', opacity:.85}, G));
+    el('rect', {x:100, y:170, width:160, height:110, fill:'var(--water)', opacity:.5}, G);
+    bub.forEach(b => el('circle', {cx:b.x, cy:b.y, r:b.r, fill:'none', stroke:'var(--surface)', 'stroke-width':1.5}, G));
+    el('path', {d:'M96 140 V282 H264 V140', class:'glass'}, G);
+    el('line', {x1:80, x2:100, y1:180, y2:180, stroke:'var(--glass)', 'stroke-width':6, 'stroke-linecap':'round'}, G);
+    el('line', {x1:260, x2:280, y1:180, y2:180, stroke:'var(--glass)', 'stroke-width':6, 'stroke-linecap':'round'}, G);
+    if (p > 1100) {
+      el('rect', {x:90, y:130, width:180, height:10, rx:4, fill:'var(--ink)'}, G);
+      el('rect', {x:172, y:116, width:16, height:14, fill:'var(--ink)'}, G);
+      el('text', {x:180, y:108, 'text-anchor':'middle', class:'svgt'}, G).textContent = 'zawór';
+    } else if (boiling) {
+      [140, 180, 220].forEach((x, k) => el('path', {d:`M${x} 132 q-8 -14 0 -28 q8 -14 0 -28`, fill:'none', stroke:'var(--muted)', 'stroke-width':2, opacity:.7}, G));
+    }
+    const ty = T => 280 - T/140*230;
+    el('rect', {x:316, y:40, width:16, height:244, rx:8, fill:'var(--bg)', stroke:'var(--glass)', 'stroke-width':2}, G);
+    el('rect', {x:320, y:ty(Tw), width:8, height:282 - ty(Tw), fill:'var(--bad)'}, G);
+    el('circle', {cx:324, cy:288, r:12, fill:'var(--bad)'}, G);
+    [0, 50, 100, 120].forEach(T => { el('line', {x1:300, x2:314, y1:ty(T), y2:ty(T), class:'tick'}, G); el('text', {x:296, y:ty(T) + 4, 'text-anchor':'end', class:'svgt'}, G).textContent = T + '°'; });
+    el('line', {x1:300, x2:340, y1:ty(tb), y2:ty(tb), class:'dash'}, G);
+    $('sbPo').textContent = p + ' hPa';
+    $('sbTb').textContent = nv(tb, 1) + ' °C';
+    $('sbT').textContent = nv(Tw, 1) + ' °C';
+    $('sbS').textContent = boiling ? 'wrze!' : 'podgrzewanie…';
+  };
+})();
+
+/* ---------- nurek Kartezjusza ---------- */
+(function(){
+  let dp = 0, y = 0, vy = 0, press = false;
+  holdButton($('kzBtn'), v => { press = v; });
+  S.kzPress = v => { press = v; $('kzBtn').classList.toggle('held', v); };
+  const SURF = 72, DEPTH = 205, Vcrit = P0/(P0 + 12000);
+  sims.kartezjusz = (dt, frozen) => {
+    if (press) dp = frozen ? 25000 : Math.min(25000, dp + 15000*dt); else dp = frozen ? 0 : Math.max(0, dp - 40000*dt);
+    const amb = P0 + dp + 1000*g*(y/1000), Va = P0/amb;
+    if (!frozen) { const a = -2500*(Va - Vcrit) - 3*vy; vy += a*dt; y += vy*dt; if (y < 0) { y = 0; vy = 0; } if (y > DEPTH) { y = DEPTH; vy = 0; } }
+    S.kz = {bottom:y >= DEPTH - 1};
+    const sq = dp/25000*12, G = $('kzG'); G.innerHTML = '';
+    el('rect', {x:112 + sq, y:SURF, width:136 - 2*sq, height:328 - SURF, fill:'var(--water)', opacity:.45}, G);
+    el('path', {d:`M160 18 H200 V40 L${248 - sq} 62 V318 Q${248 - sq} 334 232 334 H128 Q${112 + sq} 334 ${112 + sq} 318 V62 L160 40 Z`, class:'glass'}, G);
+    el('rect', {x:156, y:10, width:48, height:12, rx:3, fill:'var(--ink)'}, G);
+    if (dp > 500) { arrow(G, 70, 200, 104 + sq, 200); arrow(G, 290, 200, 256 - sq, 200); }
+    const ty = SURF + 4 + y, ah = 44*Math.max(0, (Va - 0.35)/0.65);
+    el('rect', {x:171, y:ty + 2 + ah, width:18, height:46 - ah, fill:'var(--water)', opacity:.7}, G);
+    el('rect', {x:171, y:ty + 2, width:18, height:ah, fill:'var(--surface)'}, G);
+    el('rect', {x:169, y:ty, width:22, height:50, rx:5, fill:'none', stroke:'var(--ink)', 'stroke-width':2}, G);
+    el('rect', {x:166, y:ty + 46, width:28, height:7, rx:2, fill:'var(--accent)'}, G);
+    $('kzP').textContent = nv((P0 + dp)/100, 0) + ' hPa';
+    $('kzV').textContent = nv(Va*100, 0) + ' %';
+    $('kzS').textContent = y >= DEPTH - 1 ? 'na dnie' : vy > 5 ? 'tonie' : vy < -5 ? 'wypływa' : y <= 0.5 ? 'przy powierzchni' : 'unosi się';
+  };
 })();
 
 /* ---------- wyzwania ---------- */
@@ -2251,6 +2664,19 @@ const CH = {
     ['Wstrzymaj oddech i sprawdź ciśnienie w płucach.', () => !!S.brHeld]],
   'historia': [
     ['Poznaj wszystkich odkrywców na osi czasu.', () => (S.tlClicks || 0) >= 6]],
+  'gazy': [
+    ['Podwój ciśnienie gazu (ponad 2026 hPa).', () => (S.gasP || 0) > 2026]],
+  'wypor': [
+    ['Opuść sześcian na głębokość ponad 1 m i sprawdź, czy zmienił się wypór.', () => S.wyp && S.wyp.h > 1]],
+  'plywanie': [
+    ['Znajdź ciało, które pływa w wodzie, ale tonie w alkoholu.', () => S.pl && S.pl.rl === 789 && S.pl.rb > 789 && S.pl.rb < 1000],
+    ['Spraw, żeby stal pływała.', () => S.pl && S.pl.rb === 7850 && S.pl.rl === 13534]],
+  'wiatr': [
+    ['Wywołaj wichurę.', () => S.wind && S.wind.d >= 45]],
+  'szybkowar': [
+    ['Znajdź ciśnienie, przy którym woda wrze w 120 °C.', () => S.sb && Math.abs(S.sb.tb - 120) <= 0.5]],
+  'kartezjusz': [
+    ['Opuść nurka na samo dno butelki.', () => S.kz && S.kz.bottom]],
   'zadania': [
     ['Rozwiąż 3 losowe zadania z rzędu bez błędu.', () => (S.trStreak || 0) >= 3]]
 };
@@ -2279,8 +2705,8 @@ const chip = (sel, i) => () => { const b = document.querySelectorAll(sel + ' .ch
 const openWhy = (sid, i) => document.querySelectorAll(`.slide[data-id="${sid}"] details.why`).forEach((d, k) => d.open = k === i);
 const rowOn = (sel, i) => document.querySelectorAll(sel).forEach((r, k) => r.classList.toggle('on', k === i));
 const setLid = v => { const c = $('sLidC'); c.checked = v; c.dispatchEvent(new Event('change')); };
-const releaseHolds = () => { S.paPress && S.paPress(false); S.strawSuck && S.strawSuck(false); S.brHold && S.brHold(false); };
-const whySteps = (sid, d) => [...document.querySelectorAll(`.slide[data-id="${sid}"] details.why`)].map((x, i) => ({d, run:() => openWhy(sid, i), cap:x.querySelector('summary').textContent + '. ' + x.querySelector('p').textContent}));
+const releaseHolds = () => { S.paPress && S.paPress(false); S.strawSuck && S.strawSuck(false); S.brHold && S.brHold(false); S.kzPress && S.kzPress(false); };
+const whySteps = (sid, d) => [...document.querySelectorAll(`.slide[data-id="${sid}"] details.why`)].map((x, i) => ({d, run:() => openWhy(sid, i), cap:x.querySelector('summary').textContent + '. ' + [...x.querySelectorAll('p')].map(p => p.textContent).join(' ')}));
 const typeQ = (w, p) => { const q = $('glQ'); q.value = w.slice(0, Math.ceil(p*w.length)); q.dispatchEvent(new Event('input')); };
 const ease = p => p < .5 ? 2*p*p : 1 - Math.pow(-2*p + 2, 2)/2;
 const all = (...f) => () => f.forEach(x => x());
@@ -2442,6 +2868,44 @@ const DEMOS = {
     ...whySteps('organizm', 5.5)]},
   'historia': {steps:S.tlE.map((e, i) => ({d:7, run:() => S.tlSel(i), cap:e.y + ': ' + e.t + '. ' + e.n + '.'}))},
   'bledy': {steps:whySteps('bledy', 6)},
+  'gazy': {steps:[
+    {d:4, run:() => { setVal('gasN', 100); setVal('gasT', 20); setVal('gasV', 100); }, cap:'Cząsteczki gazu bez przerwy uderzają w ścianki. To właśnie jest ciśnienie gazu.'},
+    {d:5, tween:['gasN', 100, 250], cap:'Dodajemy cząsteczek, jak przy pompowaniu opony: uderzeń jest więcej i ciśnienie rośnie.'},
+    {d:2, tween:['gasN', 250, 100]},
+    {d:5, tween:['gasT', 20, 220], cap:'Podgrzewamy gaz: cząsteczki pędzą szybciej, uderzają częściej i mocniej.'},
+    {d:2, tween:['gasT', 220, 20]},
+    {d:5, tween:['gasV', 100, 45], cap:'Ściskamy gaz tłokiem: cząsteczki mają mniej miejsca, częściej uderzają i ciśnienie rośnie.'},
+    {d:3, tween:['gasV', 45, 100], cap:'Rozprężamy gaz: ciśnienie maleje.'}]},
+  'wypor': {steps:[
+    {d:4, run:() => { setVal('wA', 0.3); setVal('wH', 0.2); }, cap:'Sześcian w wodzie. Ciecz naciska na niego z każdej strony.'},
+    {d:5, cap:'Od dołu woda naciska mocniej niż od góry, bo dolna ściana jest głębiej. Różnica to siła wyporu.'},
+    {d:6, tween:['wH', 0.2, 1.2], cap:'Opuszczamy sześcian głębiej: oba naciski rosną, ale ich różnica, czyli wypór, się nie zmienia!'},
+    {d:4, tween:['wA', 0.3, 0.5], cap:'Większy sześcian wypiera więcej wody, więc siła wyporu rośnie.'},
+    {d:3, run:() => setVal('wA', 0.3), tween:['wH', 1.2, 0.2]}]},
+  'plywanie': {steps:[
+    ...[['Korek jest bardzo lekki: pływa, prawie cały nad wodą.', 0], ['Drewno pływa, zanurzone mniej więcej w 60%.', 1], ['Lód pływa zanurzony w ok. 92%. Jak góra lodowa.', 2], ['Plastik PVC jest gęstszy od wody, więc tonie.', 3], ['Stal tonie, bo jest prawie 8 razy gęstsza od wody.', 4]].map(([c, i]) => ({d:4.5, run:() => { chip('#plLiq', 0)(); chip('#plMat', i)(); }, cap:c})),
+    {d:5, run:chip('#plLiq', 3), cap:'Ale w rtęci nawet stal pływa! Rtęć jest gęstsza od stali.'},
+    {d:5, run:() => { chip('#plMat', 2)(); chip('#plLiq', 2)(); }, cap:'Lód w alkoholu tonie, bo alkohol jest lżejszy od lodu.'},
+    {d:1, run:() => { chip('#plLiq', 0)(); chip('#plMat', 1)(); }}]},
+  'wiatr': {steps:[
+    {d:4, run:() => { setVal('wiH', 1015); setVal('wiL', 1005); }, cap:'Mała różnica ciśnień: izobary są daleko od siebie, wieje słaby wiatr.'},
+    {d:5, tween:['wiH', 1015, 1040], cap:'Wyż się wzmacnia: powietrze szybciej płynie z wyżu do niżu.'},
+    {d:5, tween:['wiL', 1005, 965], cap:'Głęboki niż: izobary się zagęszczają i wieje wichura. Powietrze krąży wokół niżu.'},
+    {d:4, run:() => {}, cap:'Na prawdziwych mapach pogody takie zagęszczone izobary oznaczają sztorm.'},
+    {d:4, anim:p => { setVal('wiH', Math.round(1040 - 15*p)); setVal('wiL', Math.round(965 + 35*p)); }, cap:'Ciśnienia się wyrównują i wiatr słabnie.'}]},
+  'szybkowar': {steps:[
+    {d:6, run:chip('#sbPre', 2), cap:'Nad morzem podgrzewamy wodę. Wrze w 100 °C.'},
+    {d:6, run:chip('#sbPre', 1), cap:'Na Rysach ciśnienie jest niższe i woda wrze już w ok. 91 °C.'},
+    {d:6, run:chip('#sbPre', 0), cap:'Na Everest woda wrze w ok. 70 °C. Jajka nie da się ugotować na twardo!'},
+    {d:7, run:chip('#sbPre', 3), cap:'W szybkowarze ciśnienie jest ok. 2 razy wyższe i woda wrze dopiero w ok. 120 °C. Jedzenie gotuje się szybciej.'}]},
+  'kartezjusz': {steps:[
+    {d:3, run:() => { S.kzPress(false); rowOn('#kzSteps li', -1); }, cap:'Nurek pływa przy powierzchni, bo ma w środku dużo powietrza.'},
+    {d:5, run:() => { S.kzPress(true); rowOn('#kzSteps li', 0); }, cap:'Ściskamy butelkę: ciśnienie w wodzie rośnie, pęcherzyk w nurku się zmniejsza i nurek tonie.'},
+    {d:2, run:() => rowOn('#kzSteps li', 2), cap:'Do nurka wpłynęła woda, więc wypór zmalał.'},
+    {d:5, run:() => { S.kzPress(false); rowOn('#kzSteps li', 3); }, cap:'Puszczamy butelkę: powietrze się rozpręża, wypycha wodę i nurek wypływa.'},
+    {d:1, run:() => rowOn('#kzSteps li', -1)}]},
+  'przyroda': {steps:whySteps('przyroda', 6)},
+  'domowe': {steps:whySteps('domowe', 8)},
   'slowniczek': {steps:[
     {d:3, cap:'Słowniczek zawiera wszystkie pojęcia z prezentacji.'},
     {d:2.5, anim:p => typeQ('barometr', p), cap:'Wpisz szukane słowo, np. „barometr”…'},
