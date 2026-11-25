@@ -1558,6 +1558,7 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
 <script>
 (function(){
 const $ = id => document.getElementById(id);
+const emit = (type, data) => window.dispatchEvent(new CustomEvent('fizyka:postep', {detail:Object.assign({type}, data)}));
 const NS = 'http://www.w3.org/2000/svg';
 const el = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; };
 const g = 10, P0 = 101325;
@@ -2262,7 +2263,7 @@ fromHash();
         opts.querySelectorAll('.opt').forEach((x, j) => { x.disabled = true; if (j === it.a) x.classList.add('ok'); });
         if (k === it.a) score++; else b.classList.add('no');
         ex.textContent = (k === it.a ? 'Dobrze. ' : 'Niestety nie. ') + it.e; ex.hidden = false;
-        $('qScore').textContent = 'Wynik: ' + score + ' / ' + Q.length;
+        $('qScore').textContent = 'Wynik: ' + score + ' / ' + Q.length; emit('quiz', {score, answered:box.querySelectorAll('.opt.ok').length, total:Q.length});
       };
       opts.appendChild(b);
     });
@@ -2336,7 +2337,7 @@ fromHash();
     ['Woda wrze w 91 °C na Rysach','a','niższe ciśnienie powietrza obniża temperaturę wrzenia.']];
   const pool = $('sgPool'), bins = [...document.querySelectorAll('.bin')], msg = $('sgMsg');
   let sel = null, mistakes = 0, done = 0, justDragged = false;
-  const score = () => { $('sgScore').textContent = done === items.length ? `Gotowe! Liczba błędów: ${mistakes}` : `Ułożone: ${done} / ${items.length} · błędy: ${mistakes}`; S.sortDone = done === items.length; };
+  const score = () => { $('sgScore').textContent = done === items.length ? `Gotowe! Liczba błędów: ${mistakes}` : `Ułożone: ${done} / ${items.length} · błędy: ${mistakes}`; S.sortDone = done === items.length; if (S.sortDone) emit('gra', {mistakes}); };
   const hit = (b, e) => { const r = b.getBoundingClientRect(); return e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom; };
   function place(card, bin){
     card.style.transform = ''; card.classList.remove('drag', 'sel'); sel = null;
@@ -2401,7 +2402,7 @@ fromHash();
       return {q:`W naczyniu jest ciecz o wysokości ${nv(h,1)} m. Ciśnienie hydrostatyczne na dnie wynosi ${nv(p,0)} Pa. Oblicz gęstość cieczy.`, a:rho, u:'kg/m³', hint:'ρ = p / (g · h).', sol:`ρ = ${nv(p,0)} : (10 · ${nv(h,1)}) = ${nv(rho,0)} kg/m³`}; }];
   let cur = null, tries = 0, streak = 0, best = 0, good = 0;
   const inp = $('trIn'), msgEl = $('trMsg');
-  const stats = () => { $('trStreak').textContent = `Poprawne: ${good} · seria: ${streak} · najlepsza seria: ${best}`; S.trStreak = best; };
+  const stats = () => { $('trStreak').textContent = `Poprawne: ${good} · seria: ${streak} · najlepsza seria: ${best}`; S.trStreak = best; if (good) emit('trening', {good, best}); };
   function next(){ cur = pick(gens)(); tries = 0; $('trQ').textContent = cur.q; $('trU').textContent = cur.u; inp.value = ''; msgEl.textContent = ''; msgEl.className = 'expl'; }
   function check(){
     const v = parseFloat(inp.value.replace(/\s/g, '').replace(',', '.'));
@@ -3095,7 +3096,7 @@ fromHash();
     });
     inp.addEventListener('keydown', e => { if (e.key === 'Backspace' && !inp.value && all[idx - 1]) { all[idx - 1].focus(); e.preventDefault(); } });
   });
-  function win(){ msg.textContent = 'Brawo! Hasło to PASKAL, jednostka ciśnienia.'; msg.style.color = 'var(--good)'; S.kwDone = true; all.forEach(c => c.classList.add('ok')); }
+  function win(){ msg.textContent = 'Brawo! Hasło to PASKAL, jednostka ciśnienia.'; msg.style.color = 'var(--good)'; S.kwDone = true; emit('krzyzowka', {}); all.forEach(c => c.classList.add('ok')); }
   $('kwCheck').onclick = () => {
     let bad = 0, empty = 0;
     rows.forEach(r => r.cells.forEach((c, i) => { c.classList.remove('ok', 'no'); if (!c.value) empty++; else if (c.value === r.w[i]) c.classList.add('ok'); else { c.classList.add('no'); bad++; } }));
@@ -3215,10 +3216,11 @@ Object.entries(CH).forEach(([id, list]) => {
   if (id === 'segreguj' || id === 'zadania') box.style.marginTop = '18px';
   host.appendChild(box);
 });
+window.addEventListener('fizyka:przywroc', e => { (e.detail.wyzwania || []).forEach(k => { const [sid, i] = k.split(':'); const c = CH[sid] && CH[sid][+i]; if (c && !c.done) { c.done = true; c.li.classList.add('done'); chDone++; } }); updCh(); });
 const updCh = () => { $('chCount').textContent = `★ ${chDone}/${chTotal}`; };
 function checkCh(id){
   const list = CH[id]; if (!list) return;
-  list.forEach(c => { if (c.done) return; let ok = false; try { ok = c[1](); } catch(e) {} if (ok) { c.done = true; c.li.classList.add('done'); c.li.querySelector('.mk').setAttribute('aria-label', 'wykonane'); chDone++; updCh(); } });
+  list.forEach(c => { if (c.done) return; let ok = false; try { ok = c[1](); } catch(e) {} if (ok) { c.done = true; c.li.classList.add('done'); c.li.querySelector('.mk').setAttribute('aria-label', 'wykonane'); chDone++; updCh(); emit('wyzwanie', {id:id + ':' + list.indexOf(c), done:chDone, total:chTotal}); } });
 }
 updCh();
 
@@ -3562,5 +3564,6 @@ function loop(now){
 requestAnimationFrame(loop);
 })();
 </script>
+<script>window.FIZYKA_DECK='cisnienie';</script><script type="module" src="https://mateuszl28.github.io/fizyka/konto.js"></script>
 </body>
 </html>
